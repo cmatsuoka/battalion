@@ -240,7 +240,7 @@ int setUpNetwork()
 void updateNetworkBuildings(char * recvline, struct tree * treelist)
     {
     char command[MAXLINE];
-    char mesg[MAXLINE];
+    char mesg[MESG_SIZE];
     int buildingNumber;
     int i;
     struct tree * temptree;
@@ -259,7 +259,7 @@ void updateNetworkBuildings(char * recvline, struct tree * treelist)
     /* tell all the clients about the building destroyed by another client */
     /***********************************************************************/
     
-    sprintf(mesg, "%s %d #", MESG_BUILDING, buildingNumber);
+    snprintf(mesg, MESG_SIZE, "%s %d #", MESG_BUILDING, buildingNumber);
 
     for(i=0; i<numClients; i++)
 	sendMessage(mesg, &clients[i], sizeof(clients[i]));
@@ -368,7 +368,7 @@ void updateNetworkTank(char * recvline, struct tank * tanklist)
 void tellAboutAllTanks(struct sockaddr_in * cli, int length
     , struct tank * tanklist)
     {
-    char mesg[MAXLINE];
+    char mesg[MESG_SIZE];
     
     struct tank * tempTank;
 
@@ -378,7 +378,7 @@ void tellAboutAllTanks(struct sockaddr_in * cli, int length
 
 /* nother copy of this elsewhere */
 
-	sprintf(mesg, "%s %d %3.1f %3.1f %3.1f %3.1f %0.3f %d %d #", MESG_NEW_TANK,
+	snprintf(mesg, MESG_SIZE, "%s %d %3.1f %3.1f %3.1f %3.1f %0.3f %d %d #", MESG_NEW_TANK,
 						 tempTank->number, 
 						 tempTank->x-globalxshift, 
 						 tempTank->z-globalzshift, 
@@ -619,7 +619,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
     int buildingBoomThisFrameCounter, int buildingBoomThisFrame[20])
     {
     char recvline[MAXLINE];
-    char mesg[MAXLINE];
+    char mesg[MESG_SIZE];
     char command[MAXLINE];
     int n;
     int servlen;
@@ -639,7 +639,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
 
     if (!connected) 
 	{
-	sprintf(mesg,MESG_REQUEST);
+	snprintf(mesg, MESG_SIZE, MESG_REQUEST);
 	sendMessage(mesg, &serv_addr, sizeof(serv_addr));
 	}
 
@@ -647,7 +647,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
 	{
 	lastNotDeadYetTime = now;
 
-	sprintf(mesg,MESG_NOTDEADYET);
+	snprintf(mesg, MESG_SIZE, MESG_NOTDEADYET);
 	sendMessage(mesg, &serv_addr, sizeof(serv_addr));
 	}
 
@@ -658,7 +658,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
 
 	for(j=0;j<buildingBoomThisFrameCounter;j++)
 	    {
-	    sprintf(mesg, "%s %d #", MESG_BUILDING, buildingBoomThisFrame[j]);
+	    snprintf(mesg, MESG_SIZE, "%s %d #", MESG_BUILDING, buildingBoomThisFrame[j]);
 
 	    sendMessage(mesg, &serv_addr, sizeof(serv_addr));
 	    }
@@ -669,7 +669,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
 
 	if (!(mainCounter % MONSTER_UPDATE_RATE))
 	    {
-	    sprintf(mesg, "%s %1d %1d %1.0f %1d %1d %1d %1.1f %1.1f %1d %1d#",
+	    snprintf(mesg, MESG_SIZE, "%s %1d %1d %1.0f %1d %1d %1d %1.1f %1.1f %1d %1d#",
 			    MESG_UPDATE, 
 			    totalCounter, 
 			    Googelon.monster, 
@@ -751,11 +751,11 @@ void tellAboutAllDeadBuildings(struct sockaddr_in * cli, int length,
 			       int buildingBoomSoFar[800])
     {
     int j;
-    char mesg[MAXLINE];
+    char mesg[MESG_SIZE];
 
     for(j=0; j<buildingBoomSoFarCounter; j++)
 	{
-	sprintf(mesg, "%s %d #", MESG_BUILDING,  buildingBoomSoFar[j]);
+	snprintf(mesg, MESG_SIZE, "%s %d #", MESG_BUILDING,  buildingBoomSoFar[j]);
 
 	sendMessage(mesg, cli, length);
 	}
@@ -774,7 +774,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
     long recvFrom;
     struct sockaddr_in cli_addr;
     char recvline[MAXLINE];
-    char mesg[MAXLINE];
+    char mesg[MESG_SIZE];
     char command[MAXLINE];
 
     struct targetInfo * tempTarget;
@@ -853,7 +853,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
 			/* send this info to all the other clients */
 			/*******************************************/
 			
-			sprintf(mesg, "%s %ld %s", MESG_CLIENT_CLIENT_UPDATE, recvFrom, recvline);
+			snprintf(mesg, MESG_SIZE, "%s %ld %s", MESG_CLIENT_CLIENT_UPDATE, recvFrom, recvline);
 			
 			for(i=0; i<numClients; i++)
 			    if (i != thisClient)
@@ -891,7 +891,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
 
 		if (oldClient)
 		    {
-		    sprintf(mesg,MESG_REAQUIRE);
+		    snprintf(mesg, MESG_SIZE, MESG_REAQUIRE);
 		    sendMessage(mesg, &cli_addr, clilen);
 
 		    tellAboutAllDeadBuildings(&cli_addr, clilen, buildingBoomSoFarCounter, buildingBoomSoFar);
@@ -907,7 +907,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
 		    
 		    numClients++;
 		    
-		    sprintf(mesg, MESG_ACKNOWLEDGE);
+		    snprintf(mesg, MESG_SIZE, MESG_ACKNOWLEDGE);
 		    sendMessage(mesg, &cli_addr, clilen);
 
 		    tellAboutAllDeadBuildings(&cli_addr, clilen, buildingBoomSoFarCounter, buildingBoomSoFar);
@@ -959,7 +959,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
 
 	for(j=0;j<buildingBoomThisFrameCounter;j++)
 	    {
-	    sprintf(mesg, "%s %d #", MESG_BUILDING, buildingBoomThisFrame[j]);
+	    snprintf(mesg, MESG_SIZE, "%s %d #", MESG_BUILDING, buildingBoomThisFrame[j]);
 
 	    for(i=0; i<numClients; i++)
 		sendMessage(mesg, &clients[i], sizeof(clients[i]));
@@ -973,7 +973,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
 
 	if (!(mainCounter % MONSTER_UPDATE_RATE))
 	    {
-	    sprintf(mesg, "%s %1d %1d %1.0f %1d %1d %1d %1.1f %1.1f %1d %1d#",
+	    snprintf(mesg, MESG_SIZE, "%s %1d %1d %1.0f %1d %1d %1d %1.1f %1.1f %1d %1d#",
 			    MESG_UPDATE, 
 			    totalCounter, 
 			    Googelon.monster, 

@@ -32,7 +32,9 @@
 #define MESG_CLIENT_CLIENT_UPDATE "client"
 
 /* text buffer size */
-#define TEXT_SIZE (256 + 11)
+#define TEXT_SIZE (256 + 50 + MAXPATH)
+/* message size */
+#define MESG_SIZE (MAXLINE + 20)
 
 #include <stdlib.h>
 #include <stddef.h>
