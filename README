@@ -1,0 +1,65 @@
+battalion - Monsters, explosions, destruction.
+	    You've seen the movies, you know what to do
+
+	    Version 1.4b ? 1996
+
+battalion was written by Andrew Johnson
+			 Electronic Visualization Laboratory (M.C 154)
+			 University of Illinois at Chicago
+			 851 South Morgan St. Room 1120 SEO
+			 Chicago, IL 60607
+
+			 ajohnson@eecs.uic.edu
+			 http://evlweb.eecs.uic.edu/aej
+			 http://www.eecs.uic.edu/~ajohnson
+
+
+The latest version of battalion can be found and downloaded from one of
+the two WWW sites listed above.
+
+
+battalion is Copyright (c) 1994-1996 by Andrew Johnson - All Rights Reserved
+
+battalion is provided free of charge. There is no registration fee.
+
+Permission to copy and distribute battalion in its entirety, for non-
+commercial purposes, is hereby granted without fee provided this
+copyright notice appears in all copies.
+
+If you redistribute battalion the ENTIRE contents of this distribution
+must be distributed.
+
+Note that distributing battalion in with any product is considered to be
+a 'commercial purpose.'
+
+This software may be modified for your own purposes, but modified
+versions may not be distributed without prior consent of the author.
+
+This software is provided 'as-is' without any express or implied
+warrenty. In no event shall the author be held liable for any
+damages arising from the use or misuse of this software.
+
+Should you want to do something with this software that is prohibited
+by the above copyright, please contact the author (email please) as he
+is very likely willing to sell out for the almighty dollar.
+
+
+This game includes code from the tk library which is
+(c) Copyright 1993, Silicon Graphics, Inc.
+
+This game can be linked with either the OpenGL (r) graphics library
+from Silicon Graphics, Inc. or the Mesa 3-D graphics library
+which is (c) Brian Paul. You will need some flavour of OpenGL or
+Mesa to be able to compile this program.
+
+
+For users without access to Showcase on a Silicon Graphics workstation
+the help files are provided as individual .gif files in the help
+directory in the battalion.data directory.
+
+
+This is version 1.4b of the OpenGL version of battalion released on 8/17/96.
+
+(This code contains enhancements written by Johan Hagman
+(Johan.Hagman@mailbox.swipnet.se) for the Solaris port of
+battalion)

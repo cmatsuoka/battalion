@@ -1,0 +1,132 @@
+#
+# Makefile for the Solaris version of battalion 1.3
+# (to produce Mesa + OpenGL + TGS binaries)
+#
+# 9-July-96
+#
+# Now possible to build a battalion binary "battalion.tgs" using the
+# TGS (Template Graphics Software) implementation of OpenGL for ZX.
+#
+
+#--------------- Solaris battalion 1.2 --------------------
+#
+# Makefile targets to build binaries are "mesa", "ogl" and "tgs".
+# The ogl and tgs targets create their object files (but not the binary)
+# in subdirectories "opengl" and "tgs" to separate them from Mesa object
+# files.
+#
+# Other targets:
+#
+# Run "make buildlinks.ogl" ONCE to create the opengl directory and the
+# symbolic links in it. This will destroy whatever is in the directory!
+# "make buildlinks.tgs" does the same thing for the TGS version.
+#
+# "make clean" removes Mesa object files, "make clean.ogl" removes
+# OpenGL object files and "make clean.tgl" removes TGS object files.
+#
+# "make clean.bin" removes the Mesa, OpenGL and TGS binaries.
+
+OBJS =	gprim.o audio.o text.o objects.o net.o graphics.o update.o battalion.o tk.o
+HDRS =	battalion.h tk.h
+
+MESABIN	= battalion.mesa
+OGLBIN	= battalion.opengl
+TGSBIN	= battalion.tgs
+
+# The subdirectory to create OpenGL objects files in
+OGLDIR = opengl
+
+# The TGS subdirectory
+TGSDIR = leo
+
+# Sun audio library
+LIBAUDIO  = /usr/demo/SOUND
+
+#--- Generic options ---
+OPT	 = -Xa -xCC -DSOLARIS -DSUNAUDIO
+# Optimization flags. xunroll=10 seems to be optimal at
+# least for a Voyager (with microSPARC CPU).
+OPT	+= -fast -xO4 -fsimple=2 -dalign -xlibmil -xunroll=10
+INCLS	 = -I/usr/openwin/include -I$(LIBAUDIO)/include
+CFLAGS	 = $(OPT) $(TARGETOPT) $(INCLS)
+
+#--- Mesa version: "make" or "make mesa" ---
+#
+MESAHOME  = /usr/local
+$(MESABIN) := TARGETOPT = -DMESAVERSION -DDETAIL=0 -xtarget=ss20/61
+#$(MESABIN) := TARGETOPT = -DMESAVERSION -DDETAIL=0 -xtarget=ssvyger
+$(MESABIN) := INCLS += -I$(MESAHOME)/include
+#-- Uncomment only one of the MESALIBS definitions below
+# Link Mesa statically
+MESALIBS =  -L$(MESAHOME)/lib -Bstatic -lMesaGL -lMesaGLU -Bdynamic \
+	-L/usr/openwin/lib -lXext -lX11 -lnsl -lsocket \
+	-L$(LIBAUDIO)/lib -laudio -lmopt -lm -lposix4 -R/usr/openwin/lib
+# Link Mesa dynamically
+#MESALIBS =  -L$(MESAHOME)/lib -lMesaGL -lMesaGLU -L/usr/openwin/lib -lXext \
+#	-lX11 -lnsl -lsocket -lmopt -lm -R/usr/openwin/lib:/usr/local/lib
+
+#--- Sun OpenGL version: "make ogl" ---
+#
+$(OGLBIN) := TARGETOPT = -DDETAIL=2 -xtarget=ultra -xarch=v8plusa -xchip=ultra
+OGLLIBS = -L/usr/openwin/lib -lGL -lGLU -lXext -lX11 -lnsl -lsocket \
+	  -L$(LIBAUDIO)/lib -laudio -lmopt -lm -lposix4 -R/usr/openwin/lib
+
+#--- TGS version for ZX: "make tgs" ---
+#
+TGSHOME = /gp/opengl/tgs
+$(TGSBIN) := TARGETOPT = -DDETAIL=2 -xtarget=ss20/61
+$(TGSBIN) := INCLS = -I$(TGSHOME)/include -I/usr/openwin/include \
+	  -I$(LIBAUDIO)/include
+TGSLIBS = -L$(TGSHOME)/lib -lGLU -lGL -L/usr/openwin/lib -ldga \
+	  -lXext -lX11 -lnsl -lsocket \
+	  -L$(LIBAUDIO)/lib -laudio -lmopt -lm -lposix4 -R/usr/openwin/lib
+
+#--------------------------------------------------------
+
+# Defines the default target
+all:	mesa
+
+mesa:
+	$(MAKE) $(MESABIN)
+
+ogl:
+	cd $(OGLDIR); $(MAKE) $(OGLBIN)
+
+tgs:
+	cd $(TGSDIR); $(MAKE) $(TGSBIN)
+
+$(MESABIN): $(OBJS) $(HDRS)
+	$(CC) $(CFLAGS) $(OBJS) $(MESALIBS) -o $@
+
+$(OGLBIN): $(OBJS) $(HDRS)
+	$(CC) $(CFLAGS) $(OBJS) $(OGLLIBS) -o ../$@
+
+$(TGSBIN): $(OBJS) $(HDRS)
+	$(CC) $(CFLAGS) $(OBJS) $(TGSLIBS) -o ../$@
+
+tk.o font.o:  $(HDRS)
+
+gprim.o audio.o text.o objects.o net.o graphics.o update.o battalion.o:  battalion.h
+
+clean:
+	rm -f $(OBJS)
+
+clean.ogl:
+	cd $(OGLDIR); rm -f $(OBJS)
+
+clean.tgs:
+	cd $(TGSDIR); rm -f $(OBJS)
+
+clean.bin:
+	rm -f $(MESABIN) $(OGLBIN) $(TGSBIN)
+
+buildlinks.ogl:
+	rm -rf $(OGLDIR)
+	mkdir $(OGLDIR)
+	cd $(OGLDIR); ln -s ../*.c ../*.h ../Makefile .
+
+buildlinks.tgs:
+	rm -rf $(TGSDIR)
+	mkdir $(TGSDIR)
+	cd $(TGSDIR); ln -s ../*.c ../*.h ../Makefile .
+
