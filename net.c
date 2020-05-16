@@ -623,7 +623,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
     char mesg[MESG_SIZE];
     char command[MAXLINE];
     int n;
-    int servlen;
+    socklen_t servlen;
     long clientFrom;
     int j;
     int frameNum;
@@ -694,7 +694,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
 	/*************************************/
 
 	 servlen = sizeof(serv_addr);
-	 n = recvfrom(sockfd, recvline, MAXLINE, 0, (struct sockaddr *) &serv_addr, (int *)& servlen);
+	 n = recvfrom(sockfd, recvline, MAXLINE, 0, (struct sockaddr *) &serv_addr, &servlen);
 	 if ((n < 0)  && (errno != EWOULDBLOCK))
 	    {
 	    printf("Client receive error\n");
@@ -781,7 +781,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
     struct targetInfo * tempTarget;
     extern int errno;
     
-    int clilen;
+    socklen_t clilen;
     int oldClient;
     int n;
     int i, j;
@@ -802,7 +802,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
 	/* Read incoming data */
 	/**********************/
 	 
-	n = recvfrom(sockfd, recvline, MAXLINE, 0, (struct sockaddr *) &cli_addr, (int *)& clilen);
+	n = recvfrom(sockfd, recvline, MAXLINE, 0, (struct sockaddr *) &cli_addr, &clilen);
     
 	if (n < 0)
 	    if(errno != EWOULDBLOCK)
