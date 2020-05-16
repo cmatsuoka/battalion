@@ -378,7 +378,8 @@ void tellAboutAllTanks(struct sockaddr_in * cli, int length
 
 /* nother copy of this elsewhere */
 
-	snprintf(mesg, MESG_SIZE, "%s %d %3.1f %3.1f %3.1f %3.1f %0.3f %d %d #", MESG_NEW_TANK,
+        // XXX: maserCount not parsed by receiver
+	snprintf(mesg, MESG_SIZE, "%s %d %3.1f %3.1f %3.1f %3.1f %d %d #", MESG_NEW_TANK,
 						 tempTank->number, 
 						 tempTank->x-globalxshift, 
 						 tempTank->z-globalzshift, 
