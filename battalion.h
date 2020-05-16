@@ -31,6 +31,9 @@
 #define MESG_UPDATE_TANK	"updateTank"
 #define MESG_CLIENT_CLIENT_UPDATE "client"
 
+/* text buffer size */
+#define TEXT_SIZE (256 + 11)
+
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
@@ -632,7 +635,6 @@ void doDrawing (int);
 struct monsterInfo autopilot(float, float, struct monsterInfo);
 
 void reshape( int, int);
-static void doDisplay(void);
 void id(void);
 
 void showCommands(char *);

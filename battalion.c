@@ -2528,7 +2528,7 @@ void initialization()
     GLint gdtmp;
     GLint tmp[4];
     GLenum type;    
-    char textBuffer[80];
+    char textBuffer[TEXT_SIZE];
     char * dataPtr;
     char * playerPointer;
     char scoredataPath[MAXPATH];
@@ -2944,7 +2944,7 @@ void initialization()
 	
 	if (hiScoreFile == NULL)
 	    {
-	    sprintf(textBuffer, "Couldn't create high score file: %s", hiScoreFile);	    
+	    snprintf(textBuffer, TEXT_SIZE, "Couldn't create high score file: %s", scorefullPath);	    
 	    showError(textBuffer);
 	    }
 	else

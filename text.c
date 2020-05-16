@@ -279,7 +279,7 @@ void showScores(int itsChristmas, struct score* gscore, struct score* vscore,
 		struct monsterInfo monster, int counter,
 		float offsetX, int detail)
     {
-    char textString[256];
+    char textString[TEXT_SIZE];
     struct monsterInfo tempMonster;
     GLfloat lineWidthNow;
 
@@ -388,7 +388,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
     if (gscore[0].number > -1)
         {
-	sprintf(textString, "%5d %s", gscore[0].number, gscore[0].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", gscore[0].number, gscore[0].name); 
 	glPushMatrix();
 	    glTranslatef(-4,  0.5,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -404,7 +404,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
     
     if (gscore[1].number > -1)
         {
-	sprintf(textString, "%5d %s", gscore[1].number, gscore[1].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", gscore[1].number, gscore[1].name); 
 	glPushMatrix();
 	    glTranslatef(-4,  0,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -413,7 +413,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
     
     if (gscore[2].number > -1)
         {
-	sprintf(textString, "%5d %s", gscore[2].number, gscore[2].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", gscore[2].number, gscore[2].name); 
 	glPushMatrix();
 	    glTranslatef(-4,  -0.5,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -424,7 +424,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
     if (vscore[0].number > -1)
         {
-	sprintf(textString, "%5d %s", vscore[0].number, vscore[0].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", vscore[0].number, vscore[0].name); 
 	glPushMatrix();
 	    glTranslatef(-4,  -1.5,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -440,7 +440,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 	
     if (vscore[1].number > -1)
         {
-	sprintf(textString, "%5d %s", vscore[1].number, vscore[1].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", vscore[1].number, vscore[1].name); 
 	glPushMatrix();
 	    glTranslatef(-4,  -2,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -449,7 +449,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
     if (vscore[2].number > -1)
         {
-	sprintf(textString, "%5d %s", vscore[2].number, vscore[2].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", vscore[2].number, vscore[2].name); 
 	glPushMatrix();
 	    glTranslatef(-4,  -2.5,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -460,7 +460,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
     if (tscore[0].number > -1)
         {
-	sprintf(textString, "%5d %s", tscore[0].number, tscore[0].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", tscore[0].number, tscore[0].name); 
 	glPushMatrix();
 	    glTranslatef(0.6,  0.5,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -476,7 +476,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 	
    if (tscore[1].number > -1)
         {
-	sprintf(textString, "%5d %s", tscore[1].number, tscore[1].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", tscore[1].number, tscore[1].name); 
 	glPushMatrix();
 	    glTranslatef(0.6,  0,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -485,7 +485,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 	
    if (tscore[2].number > -1)
         {
-	sprintf(textString, "%5d %s", tscore[2].number, tscore[2].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", tscore[2].number, tscore[2].name); 
 	glPushMatrix();
 	    glTranslatef(0.6,  -0.5,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -496,7 +496,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
     if (fscore[0].number > -1)
         {
-	sprintf(textString, "%5d %s", fscore[0].number, fscore[0].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", fscore[0].number, fscore[0].name); 
 	glPushMatrix();
 	    glTranslatef(0.6,  -1.5,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -512,7 +512,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
     if (fscore[1].number > -1)
         {
-	sprintf(textString, "%5d %s", fscore[1].number, fscore[1].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", fscore[1].number, fscore[1].name); 
 	glPushMatrix();
 	    glTranslatef(0.6,  -2,  0);
 	    tkDrawStr(strokeBase, textString);
@@ -521,7 +521,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
 	
     if (fscore[2].number > -1)
         {	
-	sprintf(textString, "%5d %s", fscore[2].number, fscore[2].name); 
+	snprintf(textString, TEXT_SIZE, "%5d %s", fscore[2].number, fscore[2].name); 
 	glPushMatrix();
 	    glTranslatef(0.6,  -2.5,  0);
 	    tkDrawStr(strokeBase, textString);
