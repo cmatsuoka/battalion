@@ -487,15 +487,16 @@ int checkForBlock(struct tank * ttank, float rad, float theta, float y)
     /**********************************************************/
     
     useTarg = 0;
-    for(temptarget = targets->next; temptarget != NULL; temptarget = temptarget->next)
+    for(temptarget = targets->next; temptarget != NULL; temptarget = temptarget->next) {
 	if (&(temptarget->monster) == ttank->goforit)
 	    {
 	    targx = temptarget->x;
 	    targz = temptarget->z;
 	    useTarg = 1;
 	    }
+    }
 
-	for(temptree = treelist->next;(temptree != NULL) && (!blocked); temptree = temptree->next)
+	for(temptree = treelist->next;(temptree != NULL) && (!blocked); temptree = temptree->next) {
 	    {
 	    if (useTarg) /* radius to the target */
 		{
@@ -534,6 +535,7 @@ int checkForBlock(struct tank * ttank, float rad, float theta, float y)
 		    blocked = 1;
 		}
 	    }
+        }
 	
     return (blocked);
     }
@@ -1778,42 +1780,40 @@ void addNewTank(struct targetInfo * targets, float startx, float startz, int sta
     /* decide on type of vehicle     */
     /*********************************/
 
-/* disable the adding of vehicles in networked games */
+    /* disable the adding of vehicles in networked games */
 
-if (netUp || client)
-    return;
+    if (netUp || client) {
+        return;
+    }
 
-
-if ((starttype != -1) && (netUp || client))
-    return;
+    if ((starttype != -1) && (netUp || client)) {
+        return;
+    }
     
     type = rand() % 100;
 
-if (netUp)
-    {
-    if (type > 50)
-	newtype = MASERTANK;
-    }
-else
-    {
-    if ((type < 28) && (mainCounter  > 750))
-	newtype = MASERTANK;
-    else if ((type >= 28) && (type < 45))
-	newtype	= HELO;
-    else if ((type >= 45) && (type < 60))
-	newtype	= LAUNCHER;
-    else if ((type >= 60) && (type < 65) && (mainCounter  > 1000))
-	newtype	= AIRPLANE;
-    else if ((type >= 65) && (type < 70) && (mainCounter  > 750))
-	newtype	= FIGHTER;
-    else if ((type >= 90) && (type < 92) && (mainCounter  > 3000))
-	newtype	= HERO;
-    else if ((type >= 92) && (type < 97) && (mainCounter  > 2000))
-	newtype	= CHH;
-    else if ((type >= 97) && (mainCounter  > 1250))
-	newtype	= MECHAG;
-    else
-	newtype = TANK;
+    if (netUp) {
+        if (type > 50)
+ 	    newtype = MASERTANK;
+    } else {
+        if ((type < 28) && (mainCounter  > 750))
+            newtype = MASERTANK;
+        else if ((type >= 28) && (type < 45))
+            newtype	= HELO;
+        else if ((type >= 45) && (type < 60))
+            newtype	= LAUNCHER;
+        else if ((type >= 60) && (type < 65) && (mainCounter  > 1000))
+            newtype	= AIRPLANE;
+        else if ((type >= 65) && (type < 70) && (mainCounter  > 750))
+            newtype	= FIGHTER;
+        else if ((type >= 90) && (type < 92) && (mainCounter  > 3000))
+            newtype	= HERO;
+        else if ((type >= 92) && (type < 97) && (mainCounter  > 2000))
+            newtype	= CHH;
+        else if ((type >= 97) && (mainCounter  > 1250))
+            newtype	= MECHAG;
+        else
+            newtype = TANK;
     }
     
 if ((!netUp) || (newtype == MASERTANK))
@@ -4655,14 +4655,14 @@ void doDrawing (int eyeball)
     /* draw structures  */
     /********************/
 
-    if (treelist->next != NULL)
+    if (treelist->next != NULL) {
 	if (view == MAPVIEW)
 	    drawtrees(allTreesEverywhere, numTreesEverywhere, mainCounter,
 				lod, itsChristmas, view);
 	else
 	    drawtrees(allTreesOnPlane, numTreesOnPlane, mainCounter,
 				lod, itsChristmas, view);
-
+    }
 
 
     /**********************************/   
@@ -4790,13 +4790,13 @@ textLineWidth = 1.01;
 
 	if (mode == DEMOMODE)
 	    {
-	    if (!(Googelon.timeDead > 100) && !showOptions)
+	    if (!(Googelon.timeDead > 100) && !showOptions) {
 		if (Googelon.moveCount < 150)
 		    showScores(itsChristmas, G, V, T, F, Googelon, mainCounter, offsetX, lod);
 		else
 		    showText2((long) (viewR-viewL), getSoundOn(), noSound, getMusicOn(),
 			    mode3D, no3D, lod, paused, itsChristmas, pointerGrab);
-    
+            }
 	    
 	    showText3(lod);
     

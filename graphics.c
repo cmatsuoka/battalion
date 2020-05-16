@@ -3388,11 +3388,12 @@ void drawTanks(struct tank * allTanks,  int counter, struct monsterInfo G,
 		/* hero firing its weapon         */
 		/**********************************/
 
-		if ((cTank.type == HERO) && (cTank.subtype == 1) && (cTank.maserCount > 10) && (cTank.maserCount < 30))
+		if ((cTank.type == HERO) && (cTank.subtype == 1) && (cTank.maserCount > 10) && (cTank.maserCount < 30)) {
 		    if (nearestTarget)
     			drawHeroWeapon(nearestTarget->x, nearestTarget->z, cTank.x, cTank.y + 0.275, cTank.z, colormaserblue, height, bottom);
 		    else
     			drawHeroWeapon(0, 0, cTank.x, cTank.y + 0.275, cTank.z, colormaserblue, height, bottom);
+                }
 
   		} 
 	    }  
