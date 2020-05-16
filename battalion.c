@@ -5509,7 +5509,7 @@ void showCommands(char * progName)
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-main (int argc, char*argv[])
+int main (int argc, char*argv[])
     { 
     register int argument;
     int port;
