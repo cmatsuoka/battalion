@@ -108,10 +108,10 @@ static    char pausedEnglish[]		= "<p>aused";
 static    char grabbedEnglish[]		= "<g>rabbed";
     
 static float energyBar[4][3] = {
-	-4.0, 4.81, 0.0, 
-	-4.0, 4.39, 0.0, 
-	 0.0, 4.39, 0.0, 
-	 0.0, 4.81, 0.0};
+	{-4.0, 4.81, 0.0},
+	{-4.0, 4.39, 0.0},
+	{ 0.0, 4.39, 0.0},
+	{ 0.0, 4.81, 0.0}};
 
     glPushAttrib(GL_DEPTH_BUFFER_BIT);
     
@@ -284,10 +284,10 @@ void showScores(int itsChristmas, struct score* gscore, struct score* vscore,
     GLfloat lineWidthNow;
 
 static    float scoreBox[4][3] = {
-	-1,  0.42, 7.1,
-	-1, -0.6, 7.1,
-	 1, -0.6, 7.1, 
-	 1,  0.42, 7.1};
+	{-1,  0.42, 7.1},
+	{-1,  -0.6, 7.1},
+	{ 1,  -0.6, 7.1},
+	{ 1,  0.42, 7.1}};
 
 glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
@@ -906,10 +906,10 @@ static    char vapourEnglish[]		= "The Vapour-8";
 static    char flutterEnglish[]		= "Flutter-9";
 
     static float optionsBox[4][3] = {
-	-0.85,  0.5, 7.1,
-	-0.85, -1.0, 7.1,
-	 0.85, -1.0, 7.1, 
-	 0.85,  0.5, 7.1};
+	{-0.85,  0.5, 7.1},
+	{-0.85, -1.0, 7.1},
+	{ 0.85, -1.0, 7.1},
+	{ 0.85,  0.5, 7.1}};
 
     glPushAttrib(GL_DEPTH_BUFFER_BIT);
  
@@ -1046,10 +1046,10 @@ void doSummary(int monster,  int deadTime, long winX, int killtanks,
     GLfloat lineWidthNow;
 
 static    float summaryBox[4][3] = {
-	-0.97,  0.25,  7.0,
-	-0.97, -1.05,  7.0,
-	 0.97, -1.05,  7.0, 
-	 0.97,  0.25,  7.0};
+	{-0.97,  0.25,  7.0},
+	{-0.97, -1.05,  7.0},
+	{ 0.97, -1.05,  7.0},
+	{ 0.97,  0.25,  7.0}};
 
     glPushAttrib(GL_DEPTH_BUFFER_BIT);
 

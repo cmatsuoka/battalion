@@ -2306,14 +2306,16 @@ void drawBattlefield(struct road * roads,  float xshift,  float zshift,
     /* 'where is the town' arrow  */
     /******************************/
 
-    static float arrow[4][3] =		{-0.2, PLANEY + 0.01, -1.0, 
-				 	 -0.2, PLANEY + 0.01,  1.0, 
-				  	  0.2, PLANEY + 0.01,  1.0, 
-				  	  0.2, PLANEY + 0.01, -1.0};
+    static float arrow[4][3] = {
+        {-0.2, PLANEY + 0.01, -1.0},
+        {-0.2, PLANEY + 0.01,  1.0},
+        { 0.2, PLANEY + 0.01,  1.0},
+        { 0.2, PLANEY + 0.01, -1.0}};
 			
-    static float arrowhead[3][3] =	{0.0, PLANEY + 0.01, -1.75, 
-					-0.5, PLANEY + 0.01, -1.0,
-				 	 0.5, PLANEY + 0.01, -1.0};
+    static float arrowhead[3][3] = {
+        { 0.0, PLANEY + 0.01, -1.75},
+        {-0.5, PLANEY + 0.01, -1.0},
+        { 0.5, PLANEY + 0.01, -1.0}};
          
     if (itsChristmas)
 	glColor3fv(colorsnow);
@@ -2382,10 +2384,11 @@ void drawBattlefield(struct road * roads,  float xshift,  float zshift,
 
 void drawLake0(int itsChristmas)
     {   
-static    float lake[4][3] =	{-0.3,  0.0, -0.3, 
-				  0.3,  0.0, -0.3, 
-				  0.3,  0.0,  0.3, 
-				 -0.3,  0.0,  0.3};
+    static float lake[4][3] = {
+        {-0.3,  0.0, -0.3},
+        { 0.3,  0.0, -0.3},
+        { 0.3,  0.0,  0.3},
+        {-0.3,  0.0,  0.3}};
 
     if (itsChristmas)
 	glColor3fv(colorblue);
@@ -2407,9 +2410,10 @@ static    float lake[4][3] =	{-0.3,  0.0, -0.3,
 
 void drawLake1(int itsChristmas)
     {    
-    float lake2[3][3] =		{-0.3,  0.0, -0.3, 
-				  0.3,  0.0, -0.3, 
-				 -0.3,  0.0,  0.3};
+    float lake2[3][3] = {
+        {-0.3,  0.0, -0.3},
+        { 0.3,  0.0, -0.3},
+        {-0.3,  0.0,  0.3}};
 
     if (itsChristmas)
 	glColor3fv(colorblue);
@@ -2430,11 +2434,11 @@ void drawLake1(int itsChristmas)
 
 void drawHill0(int itsChristmas)
     {   
-static     float hill[4][3] =	{-0.3, 0.6, -0.3, 
-				  0.3, 0.6, -0.3, 
-				  0.3, 0.6,  0.3, 
-				 -0.3, 0.6,  0.3};
-
+    static float hill[4][3] = {
+        { 0.3, 0.6, -0.3},
+        { 0.3, 0.6, -0.3},
+        { 0.3, 0.6,  0.3},
+        {-0.3, 0.6,  0.3}};
 
     if (itsChristmas)
 	glColor3fv(colorsnow);
@@ -2459,10 +2463,11 @@ void drawHill1(int sidemod, int itsChristmas)
     {   
     float c[4];
 
-static    float side[4][3] =	{-0.3, 0.6, -0.3, 
-				  0.3, 0.6, -0.3, 
-				  0.3, 0.0,  0.3, 
-				 -0.3, 0.0,  0.3};
+    static float side[4][3] = {
+        { 0.3, 0.6, -0.3},
+        { 0.3, 0.6, -0.3},
+        { 0.3, 0.0,  0.3},
+        {-0.3, 0.0,  0.3}};
     
     if (itsChristmas)
 	{
@@ -2508,9 +2513,10 @@ void drawHill2(int sidemod, int itsChristmas)
     {   
     float c[4];
 
-static    float corner[3][3] =	{-0.3, 0.6, -0.3, 
-				  0.3, 0.0, -0.3, 
-				 -0.3, 0.0,  0.3};
+    static float corner[3][3] =	{
+        {-0.3, 0.6, -0.3},
+        { 0.3, 0.0, -0.3},
+        {-0.3, 0.0,  0.3}};
  
     if (itsChristmas)
 	{
@@ -2553,12 +2559,13 @@ static    float corner[3][3] =	{-0.3, 0.6, -0.3,
 
 void drawHill3(int sidemod, int itsChristmas)
     {
-   float c[4];
+    float c[4];
 
-static    float insidecorner[4][3] =	{-0.3, 0.6, -0.3, 
-				  0.3, 0.6, -0.3, 
-				 -0.3, 0.6,  0.3, 
-				  0.3, 0.0,  0.3 };
+    static float insidecorner[4][3] = {
+        {-0.3, 0.6, -0.3},
+        { 0.3, 0.6, -0.3},
+        {-0.3, 0.6,  0.3},
+        { 0.3, 0.0,  0.3}};
  
     if (itsChristmas)
 	glColor3fv(colorsnow);

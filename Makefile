@@ -91,7 +91,8 @@ AUDIODEF = -DLINUXAUDIO
 
 # STEP 7: CHOOSE ANY OPTIMIZATIONS OR ADD ANY SPECIAL INCLUSIONS
 # ------------------------------------------------------------
-CFLAGS     = -O2  -I/usr/local/X11/include -I/usr/demo/SOUND/ -I./. $(AUDIODEF) $(OS)
+#CFLAGS     = -O2  -I/usr/local/X11/include -I/usr/demo/SOUND/ -I./. $(AUDIODEF) $(OS)
+CFLAGS     = -O2 -Wall -I. $(AUDIODEF) $(OS)
 
 
 # STEP 8: ADD ANY SPECIAL LIBRARY PATHS
