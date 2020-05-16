@@ -3187,7 +3187,7 @@ void drawTanks(struct tank * allTanks,  int counter, struct monsterInfo G,
     float xloc,  zloc;
     float radToNearestTarget, rad;
     struct targetInfo * nearestTarget;
-    struct monsterInfo * nearestMonster;
+    struct monsterInfo * nearestMonster = NULL;
     struct targetInfo * temptarget;
     
 
@@ -3732,6 +3732,7 @@ void drawBeam(float x, float z, int horz, int vert, int monsterName,
 		glShadeModel(GL_SMOOTH);
 		break;
 		
+        default:
 	case 2:	nlines = 40;
 		glShadeModel(GL_SMOOTH);
 		break;

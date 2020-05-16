@@ -77,7 +77,7 @@ float buildingHeight(int type,  int shape)
 		    break;
 		    
 	default:    showError("invalid building type (buildingHeight)");
-		    break;
+		    return 0;
 	}
 	
     return(height);
@@ -671,7 +671,7 @@ int tankHit(struct tank * ttank, float xloc, float yloc, float zloc)
 			    break;
 
 	default:	    showError("Bogus Vehicle in Tank List! (tankHit)");
-			    break;
+			    return 0;
 	}
 		
     if ((fabs(ttank->x - xloc) < blastx) &&

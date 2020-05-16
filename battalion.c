@@ -213,9 +213,9 @@ void updateScores(char * scorefullPath, int monster, int monsterScore, int mode,
     char thaName[MAXSTRING];
     FILE * hiScoreFile;
     char garbage;
-    struct score * currentOne;
+    struct score * currentOne = NULL;
     int c;
-    int position;
+    int position = 0;
     int current;
 
     if (mode == DEMOMODE)
@@ -1186,6 +1186,7 @@ void updateTanks(struct tank * allTanks, float width, float height,
 
 	radToNearestTarget = 10000;
 	nearestTarget = NULL;
+	nearestMonster = NULL;
 
 	/************************************************/
 	/* need to compute radius to the nearest target */
@@ -1765,12 +1766,12 @@ void addNewTank(struct targetInfo * targets, float startx, float startz, int sta
     float minX, minZ, maxX, maxZ;
     float ttankx, ttankz;
     struct targetInfo * temptarget;
-    char newtype;
+    char newtype = TANK;
 
     struct targetInfo * nearestTarget;
     float radToNearestTarget;
     struct monsterInfo * nearestMonster;
-    float centerX, centerZ;
+    float centerX = 0, centerZ = 0;
     float rad;
     
     struct tank * temptank,  *ttank;
@@ -1928,6 +1929,7 @@ if ((!netUp) || (newtype == MASERTANK))
 
 	    radToNearestTarget = 10000;
 	    nearestTarget = NULL;
+	    nearestMonster = NULL;
 	        
 	    for(temptarget = targets->next; temptarget != NULL; temptarget = temptarget->next)
 		{
@@ -4847,6 +4849,12 @@ struct monsterInfo autopilot(float centerX, float centerZ, struct monsterInfo th
 
     et.r = el.r = em.r = eh.r = ec.r = eg.r =
     ehe.r = ep.r = eb.r = ef.r = eall.r = BIGNUM;
+
+    et.y = el.y = em.y = eh.y = ec.y = eg.y =
+    ehe.y = ep.y = eb.y = ef.y = eall.y = 0;
+
+    et.ang = el.ang = em.ang = eh.ang = ec.ang = eg.ang =
+    ehe.ang = ep.ang = eb.ang = ef.ang = eall.ang = 0;
 
     /*************************************/
     /* find nearest building to destroy  */
