@@ -2600,7 +2600,7 @@ void initialization()
 #ifdef MESAVERSION
     tkInitPosition(-1, -1, 352, 275);
 #else
-    tkInitPosition(-1, -1, 640, 500);
+    tkInitPosition(-1, -1, 1024, 800);
 #endif
 
 #ifdef MESA_TK_VERSION
