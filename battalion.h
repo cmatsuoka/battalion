@@ -505,16 +505,11 @@ struct score
  ***************************/
 
 void tkCloseWindow(void);
-static GLenum DoNextEvent(void);
 void tkExec(void);
 void tkGetMouseLoc(int *x, int *y);
-static XVisualInfo *FindVisual(GLenum type);
-static int MakeVisualType(XVisualInfo *vi);
-static int WaitForMapNotify(Display *d, XEvent *e, char *arg);
 void tkInitPosition(int x, int y, int width, int height);
 void tkInitDisplayMode(GLenum type);
 GLenum tkInitWindow(char *title);
-static int Ignore(Display *parm1, XErrorEvent *parm2);
 void tkSetRGBMap(int size, float *rgb);
 void tkSwapBuffers(void);
 void unGrabPointer();
