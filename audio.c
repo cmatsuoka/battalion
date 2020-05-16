@@ -142,8 +142,6 @@ int getMusicOn()
 
 void checkSound(char * dataPath)
     {
-    char * garbage;
-
 #ifdef SGIAUDIO
     long pvbuf[4];
 
@@ -258,12 +256,12 @@ SndCommand testCommand;
     
     SHInitSoundHelper(&idleFlag, 8);
 
-SHPlayByHandle(musicSound, -1, &musicRefNum);
-SHPlayPause(musicRefNum);
-SHPlayByHandle(beamSound, -1, &maserbeamRefNum);
-SHPlayPause(maserbeamRefNum);
-SHPlayByHandle(monsterbeamSound, -1, &monsterbeamRefNum);
-SHPlayPause(monsterbeamRefNum);
+    SHPlayByHandle(musicSound, -1, &musicRefNum);
+    SHPlayPause(musicRefNum);
+    SHPlayByHandle(beamSound, -1, &maserbeamRefNum);
+    SHPlayPause(maserbeamRefNum);
+    SHPlayByHandle(monsterbeamSound, -1, &monsterbeamRefNum);
+    SHPlayPause(monsterbeamRefNum);
 
 
 # else
@@ -327,8 +325,6 @@ SHPlayPause(monsterbeamRefNum);
 #endif
 #endif
 #endif
-
-	garbage = dataPath; /* to avoid compiler warning */
     }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
@@ -407,7 +403,7 @@ void initSounds()
 #endif
 #ifdef LINUXAUDIO
 
-    int n;
+    //int n;
     
     musicCount		= 0;
     deadCount		= 0;
@@ -542,8 +538,6 @@ void flushSounds()
 
 void soundKiller(int soundType)
     {
-    int garbage;
-    
 #ifdef SGIAUDIO
 
     struct sound * s, *t;
@@ -607,8 +601,6 @@ printf("callkill %d... ", soundType);
     }
 */
 #endif
-
-    garbage = soundType; /* to avoid compiler warning */
     }
  
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
@@ -618,8 +610,6 @@ printf("callkill %d... ", soundType);
 
 void doSound(int theSound)
     {
-    int garbage;
-
 #ifdef SGIAUDIO
 
 static int deadMusic[MAXDEADMUSIC] = {15, 16, 17, 18, 19};
@@ -864,9 +854,7 @@ static int theMusic[MAXMUSIC] = {10, 11, 12, 13, 14};
 #endif
 #ifdef LINUXAUDIO
 
-static int deadMusic[MAXDEADMUSIC] = {15, 16};
-
-static int theMusic[MAXMUSIC] = {10, 11};
+    static int theMusic[MAXMUSIC] = {10, 11};
 
     int soundDelay;
     
@@ -1063,7 +1051,6 @@ static int theMusic[MAXMUSIC] = {10, 11};
 	}
     }
 #endif
-    garbage = theSound;
 }
 
 
@@ -1076,8 +1063,6 @@ static int theMusic[MAXMUSIC] = {10, 11};
 
 void OutAudio(int sCounter)
     {
-    int garbage;
-    
 #ifdef SGIAUDIO
 
     ALconfig audioPortConfig;
@@ -1181,8 +1166,6 @@ void OutAudio(int sCounter)
 # endif
 #ifdef LINUXAUDIO
 
-    static int first = 1;
-    
     /* Check if a valid buffer and buffer contains a sample */
     
 //    printf("Sound N --> %d \n", sCounter);
@@ -1193,8 +1176,6 @@ void OutAudio(int sCounter)
     Snd_effect( sCounter, sCounter );
     
 # endif
-
-    garbage = sCounter; /* to avoid compiler warning */
     }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
@@ -1205,9 +1186,6 @@ void OutAudio(int sCounter)
 
 void InitAudio(char * fileName,  char * dataPath, int sCounter)
     {
-    char * garbName,  * garbPath;
-    int garbCount;
-    
 #ifdef SGIAUDIO
 
     /* IRIX 6 compilers want these next two to be integers 
@@ -1315,9 +1293,4 @@ void InitAudio(char * fileName,  char * dataPath, int sCounter)
 #ifdef LINUXAUDIO
 
 #endif
-
-    garbName  = fileName;
-    garbPath  = dataPath;
-    garbCount = sCounter;
-
     }

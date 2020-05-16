@@ -237,7 +237,7 @@ void updateBeam(struct monsterInfo * g,  struct targetInfo * t, float x, float z
     float rbeamhorz,  rbeamvert;
     float hdiff,  vdiff;
     float tankx,  tanky,  tankz;
-    float beamx,  beamy,  beamz;
+    float /*beamx,  beamy,*/  beamz;
     float height;
     float R;
     int itsDead;
@@ -294,7 +294,7 @@ void updateBeam(struct monsterInfo * g,  struct targetInfo * t, float x, float z
 
     hdiff = - abeamhorz;
 
-    beamx = 0;		/* rbeamhorz * sin(abeamhorz + hdiff); */
+    //beamx = 0;		/* rbeamhorz * sin(abeamhorz + hdiff); */
     beamz = rbeamhorz;	/* rbeamhorz * cos(abeamhorz + hdiff); */
     
     if (beamz == 0)
@@ -304,7 +304,7 @@ void updateBeam(struct monsterInfo * g,  struct targetInfo * t, float x, float z
     abeamvert = atan( (loc3[1] - loc1[1]) / beamz);
 
     vdiff = -abeamvert;
-    beamy = 0;		/* rbeamvert * sin(abeamvert + vdiff); */
+    //beamy = 0;		/* rbeamvert * sin(abeamvert + vdiff); */
     beamz = rbeamvert;	/* rbeamvert * cos(abeamvert + vdiff); */
     
     if (beamz < 0)

@@ -99,7 +99,7 @@ void initFonts(void)
 void showText(struct targetInfo * targets, float energy, int score,
 	    long winX, int paused,  int grabbed)
     {
-    float pixtoSpace;
+    //float pixtoSpace;
     struct targetInfo * temptarget;
     float drop;
 
@@ -117,7 +117,7 @@ static float energyBar[4][3] = {
     
     glDisable(GL_DEPTH_TEST);
          
-    pixtoSpace = 10.0 / winX;
+    //pixtoSpace = 10.0 / winX;
 
     /* draw the energy bar */
 
@@ -540,9 +540,8 @@ void showText2(long winX, int soundOn, int noSound, int musicOn,
 		int mode3D, int no3D, int detail, int paused,
 		int itsChristmas, int ptrGrab)
     {
-    float pixtoSpace;
+    //float pixtoSpace;
     float right;
-    int garbage;
 
 static    char viewsEnglish[]	= "Views:";
 static    char views1English[]	= "-Monster";
@@ -575,7 +574,7 @@ static    char musicEnglish[]		= "-Music";
 
     glPushAttrib(GL_DEPTH_BUFFER_BIT);
     
-    pixtoSpace = 3.0/ winX;
+    //pixtoSpace = 3.0/ winX;
           
     glDisable(GL_DEPTH_TEST);
 
@@ -779,7 +778,6 @@ static    char musicEnglish[]		= "-Music";
 		  tkDrawStr(strokeBase,offstring);
     glPopMatrix();
 
-    garbage = no3D;
 /* someday the 3D from the Original GL version will return in
  * the OpenGL version ... but not yet
 
@@ -896,7 +894,7 @@ static    char spaceEnglish[]		= "Press the spacebar to begin";
 void doOptions(struct monsterInfo monster, long xWin, int counter,
 		int itsChristmas, float offsetX, int detail)
     {
-    float pixtoSpace;
+    //float pixtoSpace;
     struct monsterInfo tempMonster;
     GLfloat lineWidthNow;
 
@@ -958,7 +956,7 @@ static    char flutterEnglish[]		= "Flutter-9";
     /* draw text */
     /*************/
 
-    pixtoSpace = 2.0 / xWin;
+    //pixtoSpace = 2.0 / xWin;
 
     glColor3fv(colorwhite); 
 
@@ -1040,7 +1038,7 @@ void doSummary(int monster,  int deadTime, long winX, int killtanks,
 		int counter, int detail, int moreThanOne)
     {    
     int angle;
-    float pixtoSpace;
+    //float pixtoSpace;
     char resultString[15];
     char monsterString[40];
     GLfloat lineWidthNow;
@@ -1053,7 +1051,7 @@ static    float summaryBox[4][3] = {
 
     glPushAttrib(GL_DEPTH_BUFFER_BIT);
 
-    pixtoSpace = 2.0 / winX;
+    //pixtoSpace = 2.0 / winX;
 
     angle = (deadTime * 10) % 3600;
 

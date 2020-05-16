@@ -587,12 +587,6 @@ static int MakeVisualType(XVisualInfo *vi)
 
 static int WaitForMapNotify(Display *d, XEvent *e, char *arg)
     {
-    Display *display;
-    char *arguments;
-    
-    display = d;
-    arguments = arg;
-    
 	if (e->type == MapNotify && e->xmap.window == window) {
 	    return GL_TRUE;
 	}
@@ -737,12 +731,6 @@ GLenum tkInitWindow(char *title)
 
 static int Ignore(Display *parm1, XErrorEvent *parm2)
     {
-    Display *display;
-    XErrorEvent *error;
-    
-    display = parm1;
-    error = parm2;
-    
 	return 0;
     }
 

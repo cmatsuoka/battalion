@@ -1131,7 +1131,7 @@ void updateTanks(struct tank * allTanks, float width, float height,
     float Vplane, angle;
     int blocked, maserOn;
     struct tank *killertank,  *ttank, *temptank;
-    float energyLoss;
+    //float energyLoss;
     float tankx,  tankz;
     int tanktype;
     
@@ -1169,7 +1169,7 @@ void updateTanks(struct tank * allTanks, float width, float height,
     centerZ	= 0;
     
     maserOn	= 0;
-    energyLoss	= 0;
+    //energyLoss	= 0;
 
     temptank	= allTanks;
 
@@ -3220,11 +3220,6 @@ void checkMouse()
     
 GLenum MouseDown(int mouseX, int mouseY, GLenum button)
    {
-    int xloc,yloc;
-    
-    xloc = mouseX;
-    yloc = mouseY;
-
     if ((mode == PLAYMODE) && !paused && (button == TK_LEFTBUTTON))
 	Googelon.beamOn = 1;
 
@@ -3235,11 +3230,6 @@ GLenum MouseDown(int mouseX, int mouseY, GLenum button)
 
 GLenum MouseUp(int mouseX, int mouseY, GLenum button)
    {
-    int xloc,yloc;
-    
-    xloc = mouseX;
-    yloc = mouseY;
-
     if ((mode == PLAYMODE) && (button == TK_LEFTBUTTON))
 	Googelon.beamOn = 0;
 
@@ -3362,10 +3352,6 @@ void playNoPauseKeys(int key)
 
 GLenum processKey(int key, GLenum mask)
     {
-    GLenum keyMask;
-    
-    keyMask = mask;
-    
     if (mode == DEMOMODE)
 	demoKeys(key);
 	    
@@ -3473,10 +3459,6 @@ GLenum processKey(int key, GLenum mask)
 
 GLenum processKeyRelease(int key)
     {
-    int garbage;
-    
-    garbage = key; /* to avoid compiler warning */
-
     Googelon.beamOn = 0;
     return GL_TRUE;
     }
