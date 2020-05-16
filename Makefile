@@ -119,6 +119,18 @@ $(TARGET): $(OBJ)
 clean:
 	rm -f $(OBJ)
 
+audio.o: audio.c battalion.h tk.h
+battalion.o: battalion.c battalion.h tk.h
+font.o: font.c tk.h
+gprim.o: gprim.c battalion.h tk.h
+graphics.o: graphics.c battalion.h tk.h
+net.o: net.c battalion.h tk.h
+objects.o: objects.c battalion.h tk.h
+soundIt.o: soundIt.c
+text.o: text.c battalion.h tk.h
+tk.o: tk.c battalion.h tk.h
+update.o: update.c battalion.h tk.h
+
 #-------------------------------------------------------------------
 # Here is a listing of which compilers will compile battalion on
 # a variety of hardware/ OSs.
