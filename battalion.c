@@ -228,13 +228,21 @@ void updateScores(char * scorefullPath, int monster, int monsterScore, int mode,
     if (hiScoreFile != NULL)
 	{
 	for(c=0;c<3;c++)
-	    fscanf(hiScoreFile, "%d%c%s", &(G[c].number), &garbage, &(G[c].name));    
+	    if(fscanf(hiScoreFile, "%d%c%s", &(G[c].number), &garbage, G[c].name) == EOF) {
+                perror(scorefullPath);
+            }
 	for(c=0;c<3;c++)
-	    fscanf(hiScoreFile, "%d%c%s", &(V[c].number), &garbage, &(V[c].name));
+	    if(fscanf(hiScoreFile, "%d%c%s", &(V[c].number), &garbage, V[c].name) == EOF) {
+                perror(scorefullPath);
+            }
 	for(c=0;c<3;c++)
-	    fscanf(hiScoreFile, "%d%c%s", &(F[c].number), &garbage, &(F[c].name));
+	    if(fscanf(hiScoreFile, "%d%c%s", &(F[c].number), &garbage, F[c].name) == EOF) {
+                perror(scorefullPath);
+            }
 	for(c=0;c<3;c++)
-	    fscanf(hiScoreFile, "%d%c%s", &(T[c].number), &garbage, &(T[c].name));
+	    if(fscanf(hiScoreFile, "%d%c%s", &(T[c].number), &garbage, T[c].name) == EOF) {
+                perror(scorefullPath);
+            }
 	
 	fclose(hiScoreFile);
 	
@@ -2307,7 +2315,9 @@ void setPlayConditions()
 	    temptree = (struct tree *) amalloc(sizeof(struct tree), arena);
 	    if (temptree != NULL)
 		{
-		fscanf(roadFile,  "%f %f %d %d ", &x, &z, &type, &shape);
+		if(fscanf(roadFile,  "%f %f %d %d ", &x, &z, &type, &shape) == EOF) {
+                    perror(fullPath);
+                }
 		
 		temptree->x		    = x;
 		temptree->z		    = z;
@@ -2383,7 +2393,9 @@ void setPlayConditions()
 	else
 	    {
 	    do  {
-		fscanf(roadFile,  "%f %f %d", &x, &z, &type);
+		if(fscanf(roadFile,  "%f %f %d", &x, &z, &type) == EOF) {
+                    perror(fullPath);
+                }
 		
 		if (x || z || type)
 		    addNewTank(targets, x, z, type, tanklist, treelist, mainCounter, firingDelay, &Googelon);
@@ -2873,7 +2885,9 @@ void initialization()
 	i = 0;
 	do
 	    {
-	    fscanf(roadFile,  "%f %f %d", &garb1,  &garb2, &garb3);
+	    if(fscanf(roadFile,  "%f %f %d", &garb1,  &garb2, &garb3) == EOF) {
+                perror(fullPath);
+            }
 	    i += 1;
 	    }
 	while (garb1 || garb2 || garb3);
@@ -2891,7 +2905,9 @@ void initialization()
 	    i = i - 2;
 	    for(; i >= 0; i--)
 		{
-		fscanf(roadFile,  "%f %f %d", &garb1,  &garb2, &garb3);
+		if(fscanf(roadFile,  "%f %f %d", &garb1,  &garb2, &garb3) == EOF) {
+                    perror(fullPath);
+                }
 		roadSystem[i].x = garb1;
 		roadSystem[i].y = garb2;
 		roadSystem[i].type = (char) garb3;
@@ -2977,21 +2993,45 @@ void initialization()
 	}
     else
 	{	
-	fscanf(hiScoreFile, "%d%c%s", &(G[0].number), &garbage, &(G[0].name));
-	fscanf(hiScoreFile, "%d%c%s", &(G[1].number), &garbage, &(G[1].name));
-	fscanf(hiScoreFile, "%d%c%s", &(G[2].number), &garbage, &(G[2].name));
+	if(fscanf(hiScoreFile, "%d%c%s", &(G[0].number), &garbage, G[0].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(G[1].number), &garbage, G[1].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(G[2].number), &garbage, G[2].name) == EOF) {
+            perror(scorefullPath);
+        }
 
-	fscanf(hiScoreFile, "%d%c%s", &(V[0].number), &garbage, &(V[0].name));
-	fscanf(hiScoreFile, "%d%c%s", &(V[1].number), &garbage, &(V[1].name));
-	fscanf(hiScoreFile, "%d%c%s", &(V[2].number), &garbage, &(V[2].name));
+	if(fscanf(hiScoreFile, "%d%c%s", &(V[0].number), &garbage, V[0].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(V[1].number), &garbage, V[1].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(V[2].number), &garbage, V[2].name) == EOF) {
+            perror(scorefullPath);
+        }
 
-	fscanf(hiScoreFile, "%d%c%s", &(F[0].number), &garbage, &(F[0].name));
-	fscanf(hiScoreFile, "%d%c%s", &(F[1].number), &garbage, &(F[1].name));
-	fscanf(hiScoreFile, "%d%c%s", &(F[2].number), &garbage, &(F[2].name));
+	if(fscanf(hiScoreFile, "%d%c%s", &(F[0].number), &garbage, F[0].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(F[1].number), &garbage, F[1].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(F[2].number), &garbage, F[2].name) == EOF) {
+            perror(scorefullPath);
+        }
 
-	fscanf(hiScoreFile, "%d%c%s", &(T[0].number), &garbage, &(T[0].name));
-	fscanf(hiScoreFile, "%d%c%s", &(T[1].number), &garbage, &(T[1].name));
-	fscanf(hiScoreFile, "%d%c%s", &(T[2].number), &garbage, &(T[2].name));
+	if(fscanf(hiScoreFile, "%d%c%s", &(T[0].number), &garbage, T[0].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(T[1].number), &garbage, T[1].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, "%d%c%s", &(T[2].number), &garbage, T[2].name) == EOF) {
+            perror(scorefullPath);
+        }
 
 	fclose(hiScoreFile);
 	}
