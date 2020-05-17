@@ -1,0 +1,62 @@
+name: battalion
+version: 1.4c
+base: core18
+summary: Monsters, explosions, senseless destruction
+description: |
+  You've seen the movies, you know what to do.
+
+  battalion is a giant monster game where you are a giant monster
+  fighting to survive against the military while causing as much
+  destruction as you can. You can choose to be one of four possible
+  monsters: Googelon, Techs, the Vapour or Flutter.
+
+  Your sudden arrival caught the military off guard, but they're on
+  their way. The military is equipped with Tanks, Rocket Launchers,
+  Maser-Tanks, Helicopters, Jet Fighters, and Bombers. More powerful
+  weapons are currently under development and will be deployed
+  against you when available.
+grade: stable
+confinement: strict
+
+apps:
+  battalion:
+    command: usr/bin/battalion
+    plugs:
+      - pulseaudio
+      - x11
+      - opengl
+      - audio-playback
+    environment:
+      ALSOFT_CONF: $SNAP_DATA/etc/openal/alsoft.conf
+      ALSOFT_DRIVERS: pulse
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio
+      LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+      BATTALIONDATADIR: $SNAP/usr/share/games/battalion
+      BATTALIONSCOREDIR: $SNAP_USER_COMMON
+
+parts:
+  battalion:
+    source: .
+    plugin: make
+    build-packages:
+      - make
+      - gcc
+      - libopenal-dev
+      - libalut-dev
+      - libgl-dev
+      - libglu-dev
+    stage-packages:
+      - libgl1
+      - libglu1-mesa
+      - libglx0
+      - libalut0
+      - libopenal1
+      - libpulse0
+    override-build: |
+      make
+      mkdir -p "$SNAPCRAFT_PART_INSTALL"/usr/bin "$SNAPCRAFT_PART_INSTALL"/usr/share/games/battalion
+      cp battalion "$SNAPCRAFT_PART_INSTALL"/usr/bin
+      cp -rap DATA SOUNDS MUSIC TEXTURES "$SNAPCRAFT_PART_INSTALL"/usr/share/games/battalion
+    prime:
+      - -usr/share/doc
+      - -usr/share/man
