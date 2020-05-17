@@ -35,6 +35,8 @@
 #define TEXT_SIZE (256 + 50 + MAXPATH)
 /* message size */
 #define MESG_SIZE (MAXLINE + 20)
+/* score name size */
+#define NAME_SIZE 16
 
 #include <stdlib.h>
 #include <stddef.h>
@@ -496,7 +498,7 @@ struct enemy
 struct score
     	{
 	int number;
-	char name[256];
+	char name[NAME_SIZE];
     	};
 
 /***************************

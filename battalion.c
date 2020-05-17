@@ -167,8 +167,8 @@ float textLineWidth;
 
 struct timeval startTime, endTime;
 
-char playerName[16];
-char playerHome[256];
+char playerName[NAME_SIZE];
+char playerHome[MAXPATH];
 
 struct score G[3];
 struct score F[3];
@@ -210,37 +210,40 @@ void goToLowDetail()
 
 void updateScores(char * scorefullPath, int monster, int monsterScore, int mode, char * playerName)
     {
-    char thaName[MAXSTRING];
+    char thaName[NAME_SIZE];
     FILE * hiScoreFile;
     char garbage;
     struct score * currentOne = NULL;
     int c;
     int position = 0;
     int current;
+    char format[32];
 
     if (mode == DEMOMODE)
 	strcpy(thaName, "demo");
     else
-	strcpy(thaName, playerName);
+	strncpy(thaName, playerName, NAME_SIZE - 1);
     
     hiScoreFile = fopen(scorefullPath, "r");
+
+    snprintf(format, sizeof(format), "%%d%%c%%%ds", NAME_SIZE - 1);
     
     if (hiScoreFile != NULL)
 	{
 	for(c=0;c<3;c++)
-	    if(fscanf(hiScoreFile, "%d%c%s", &(G[c].number), &garbage, G[c].name) == EOF) {
+	    if(fscanf(hiScoreFile, format, &(G[c].number), &garbage, G[c].name) == EOF) {
                 perror(scorefullPath);
             }
 	for(c=0;c<3;c++)
-	    if(fscanf(hiScoreFile, "%d%c%s", &(V[c].number), &garbage, V[c].name) == EOF) {
+	    if(fscanf(hiScoreFile, format, &(V[c].number), &garbage, V[c].name) == EOF) {
                 perror(scorefullPath);
             }
 	for(c=0;c<3;c++)
-	    if(fscanf(hiScoreFile, "%d%c%s", &(F[c].number), &garbage, F[c].name) == EOF) {
+	    if(fscanf(hiScoreFile, format, &(F[c].number), &garbage, F[c].name) == EOF) {
                 perror(scorefullPath);
             }
 	for(c=0;c<3;c++)
-	    if(fscanf(hiScoreFile, "%d%c%s", &(T[c].number), &garbage, T[c].name) == EOF) {
+	    if(fscanf(hiScoreFile, format, &(T[c].number), &garbage, T[c].name) == EOF) {
                 perror(scorefullPath);
             }
 	
@@ -277,24 +280,24 @@ void updateScores(char * scorefullPath, int monster, int monsterScore, int mode,
 	    {
 	    switch (position) {
 		case 0: currentOne[2].number = currentOne[1].number;
-			strcpy(currentOne[2].name, currentOne[1].name);
+			strncpy(currentOne[2].name, currentOne[1].name, NAME_SIZE);
 			
 			currentOne[1].number = currentOne[0].number;
-			strcpy(currentOne[1].name, currentOne[0].name);
+			strncpy(currentOne[1].name, currentOne[0].name, NAME_SIZE);
 			
 			currentOne[0].number = monsterScore;
-			strcpy(currentOne[0].name, thaName);
+			strncpy(currentOne[0].name, thaName, NAME_SIZE);
 			break;
 			
 		case 1: currentOne[2].number = currentOne[1].number;
-			strcpy(currentOne[2].name, currentOne[1].name);
+			strncpy(currentOne[2].name, currentOne[1].name, NAME_SIZE);
 			
 			currentOne[1].number = monsterScore;
-			strcpy(currentOne[1].name, thaName);
+			strncpy(currentOne[1].name, thaName, NAME_SIZE);
 			break;
 			
 		case 2: currentOne[2].number = monsterScore;
-			strcpy(currentOne[2].name, thaName);
+			strncpy(currentOne[2].name, thaName, NAME_SIZE);
 			break;
 		}
 	    }
@@ -316,25 +319,25 @@ void updateScores(char * scorefullPath, int monster, int monsterScore, int mode,
 		case 0: switch (current)
 			    {
 			    case 0:	currentOne[0].number = monsterScore;
-					strcpy(currentOne[0].name, thaName);
+					strncpy(currentOne[0].name, thaName, NAME_SIZE);
 					break;
 			    
 			    case 1:	currentOne[1].number = currentOne[0].number;
-					strcpy(currentOne[1].name, currentOne[0].name);
+					strncpy(currentOne[1].name, currentOne[0].name, NAME_SIZE);
 					
 					currentOne[0].number = monsterScore;
-					strcpy(currentOne[0].name, thaName);
+					strncpy(currentOne[0].name, thaName, NAME_SIZE);
 					break;
     
 			    case -1:    
 			    case 2:	currentOne[2].number = currentOne[1].number;
-					strcpy(currentOne[2].name, currentOne[1].name);
+					strncpy(currentOne[2].name, currentOne[1].name, NAME_SIZE);
 					
 					currentOne[1].number = currentOne[0].number;
-					strcpy(currentOne[1].name, currentOne[0].name);
+					strncpy(currentOne[1].name, currentOne[0].name, NAME_SIZE);
 			
 					currentOne[0].number = monsterScore;
-					strcpy(currentOne[0].name, thaName);
+					strncpy(currentOne[0].name, thaName, NAME_SIZE);
 					break;
 			    }
 			    
@@ -346,15 +349,15 @@ void updateScores(char * scorefullPath, int monster, int monsterScore, int mode,
 			    case 0:	break;
 			    
 			    case 1:	currentOne[1].number = monsterScore;
-					strcpy(currentOne[1].name, thaName);
+					strncpy(currentOne[1].name, thaName, NAME_SIZE);
 					break;
     
 			    case -1:
 			    case 2:	currentOne[2].number = currentOne[1].number;
-					strcpy(currentOne[2].name, currentOne[1].name);
+					strncpy(currentOne[2].name, currentOne[1].name, NAME_SIZE);
 			
 					currentOne[1].number = monsterScore;
-					strcpy(currentOne[1].name, thaName);
+					strncpy(currentOne[1].name, thaName, NAME_SIZE);
 					break;
 			    }
 			    
@@ -369,7 +372,7 @@ void updateScores(char * scorefullPath, int monster, int monsterScore, int mode,
 			    
 			    case -1:
 			    case 2:	currentOne[2].number = monsterScore;
-					strcpy(currentOne[2].name, thaName);
+					strncpy(currentOne[2].name, thaName, NAME_SIZE);
 					break;
 			    }
 		
@@ -2302,8 +2305,8 @@ void setPlayConditions()
     /* read in data file of structures (trees, buildings, etc.) */
     /************************************************************/
 
-    strcpy(fullPath, dataPath);
-    strcat(fullPath, "DATA/tree.data");
+    strncpy(fullPath, dataPath, MAXPATH);
+    strncat(fullPath, "DATA/tree.data", MAXPATH);
     roadFile = fopen(fullPath, "r");
     
     treeID = 0;
@@ -2386,8 +2389,8 @@ void setPlayConditions()
 
     if (!netUp && !client)
 	{
-	strcpy(fullPath, dataPath);
-	strcat(fullPath, "DATA/tank.data");
+	strncpy(fullPath, dataPath, MAXPATH);
+	strncat(fullPath, "DATA/tank.data", MAXPATH);
 	roadFile = fopen(fullPath, "r");
       
 	if (roadFile == NULL)
@@ -2633,12 +2636,12 @@ void initialization()
 	playerPointer = getlogin();
 
     if (playerPointer != NULL)
-	strcpy(playerName, playerPointer);
+	strncpy(playerName, playerPointer, NAME_SIZE - 1);
 
     passwd = getpwuid(getuid());
     if (passwd != NULL && passwd->pw_dir != NULL && *(passwd->pw_dir) != '\0')
 	{
-	strcpy(playerHome, passwd->pw_dir);
+	strncpy(playerHome, passwd->pw_dir, MAXPATH - 1);
 	playerHome[strlen(playerHome)] = '\0';
 	}
     else
@@ -2826,12 +2829,12 @@ void initialization()
     dataPtr = getenv("BATTALIONDATADIR");
     if (dataPtr != NULL)
 	{
-	strcpy(dataPath, dataPtr);
+	strncpy(dataPath, dataPtr, MAXPATH - 1);
 	if (dataPath[strlen(dataPath)-1] != '/')
 	    strcat(dataPath, "/");
 	    
-	strcpy(fullPath, dataPath);
-	strcat(fullPath, "battalion.sho");
+	strncpy(fullPath, dataPath, MAXPATH);
+	strncat(fullPath, "battalion.sho", MAXPATH);
 	roadFile = fopen(fullPath, "rb");
 	}
 	
@@ -2873,8 +2876,8 @@ void initialization()
     /* read in data file of roads       */
     /************************************/
   
-    strcpy(fullPath, dataPath);
-    strcat(fullPath, "DATA/road.data");
+    strncpy(fullPath, dataPath, MAXPATH);
+    strncat(fullPath, "DATA/road.data", MAXPATH);
     roadFile = fopen(fullPath, "r");
   
     if (roadFile == NULL)
@@ -2945,15 +2948,15 @@ void initialization()
 
     dataPtr = getenv("BATTALIONSCOREDIR");
     if (dataPtr != NULL)
-	strcpy(scoredataPath, dataPtr);
+	strncpy(scoredataPath, dataPtr, MAXPATH - 1);
     else
 	strcpy(scoredataPath, "/usr/tmp");
 
     if (scoredataPath[strlen(scoredataPath)-1] != '/')
 	strcat(scoredataPath, "/");
     
-    strcpy(scorefullPath, scoredataPath);
-    strcat(scorefullPath, "battalion_hiscore");
+    strncpy(scorefullPath, scoredataPath, MAXPATH);
+    strncat(scorefullPath, "battalion_hiscore", MAXPATH);
     hiScoreFile = fopen(scorefullPath, "r");
 
     if (hiScoreFile == NULL)
@@ -2995,43 +2998,47 @@ void initialization()
 	}
     else
 	{	
-	if(fscanf(hiScoreFile, "%d%c%s", &(G[0].number), &garbage, G[0].name) == EOF) {
+        char format[32];
+
+        snprintf(format, sizeof(format), "%%d%%c%%%ds", NAME_SIZE - 1);
+
+	if(fscanf(hiScoreFile, format, &(G[0].number), &garbage, G[0].name) == EOF) {
             perror(scorefullPath);
         }
-	if(fscanf(hiScoreFile, "%d%c%s", &(G[1].number), &garbage, G[1].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(G[1].number), &garbage, G[1].name) == EOF) {
             perror(scorefullPath);
         }
-	if(fscanf(hiScoreFile, "%d%c%s", &(G[2].number), &garbage, G[2].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(G[2].number), &garbage, G[2].name) == EOF) {
             perror(scorefullPath);
         }
 
-	if(fscanf(hiScoreFile, "%d%c%s", &(V[0].number), &garbage, V[0].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(V[0].number), &garbage, V[0].name) == EOF) {
             perror(scorefullPath);
         }
-	if(fscanf(hiScoreFile, "%d%c%s", &(V[1].number), &garbage, V[1].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(V[1].number), &garbage, V[1].name) == EOF) {
             perror(scorefullPath);
         }
-	if(fscanf(hiScoreFile, "%d%c%s", &(V[2].number), &garbage, V[2].name) == EOF) {
-            perror(scorefullPath);
-        }
-
-	if(fscanf(hiScoreFile, "%d%c%s", &(F[0].number), &garbage, F[0].name) == EOF) {
-            perror(scorefullPath);
-        }
-	if(fscanf(hiScoreFile, "%d%c%s", &(F[1].number), &garbage, F[1].name) == EOF) {
-            perror(scorefullPath);
-        }
-	if(fscanf(hiScoreFile, "%d%c%s", &(F[2].number), &garbage, F[2].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(V[2].number), &garbage, V[2].name) == EOF) {
             perror(scorefullPath);
         }
 
-	if(fscanf(hiScoreFile, "%d%c%s", &(T[0].number), &garbage, T[0].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(F[0].number), &garbage, F[0].name) == EOF) {
             perror(scorefullPath);
         }
-	if(fscanf(hiScoreFile, "%d%c%s", &(T[1].number), &garbage, T[1].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(F[1].number), &garbage, F[1].name) == EOF) {
             perror(scorefullPath);
         }
-	if(fscanf(hiScoreFile, "%d%c%s", &(T[2].number), &garbage, T[2].name) == EOF) {
+	if(fscanf(hiScoreFile, format, &(F[2].number), &garbage, F[2].name) == EOF) {
+            perror(scorefullPath);
+        }
+
+	if(fscanf(hiScoreFile, format, &(T[0].number), &garbage, T[0].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, format, &(T[1].number), &garbage, T[1].name) == EOF) {
+            perror(scorefullPath);
+        }
+	if(fscanf(hiScoreFile, format, &(T[2].number), &garbage, T[2].name) == EOF) {
             perror(scorefullPath);
         }
 
@@ -5572,7 +5579,7 @@ int main (int argc, char*argv[])
 	    {
 	    if ((argument+1) < argc)
 		{
-		strcpy(portName, argv[argument+1]);
+		strncpy(portName, argv[argument+1], sizeof(portName) - 1);
 		sscanf(portName, "%d", &port);
 		setPortNumber(port);
 		argument++;
