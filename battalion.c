@@ -2834,7 +2834,7 @@ void initialization()
 	    strcat(dataPath, "/");
 	    
 	strncpy(fullPath, dataPath, MAXPATH);
-	strncat(fullPath, "battalion.sho", MAXPATH);
+	strncat(fullPath, "DATA/road.data", MAXPATH);
 	roadFile = fopen(fullPath, "rb");
 	}
 	
@@ -2855,10 +2855,10 @@ void initialization()
 	else
 */
 	    {
-	    roadFile = fopen("./battalion.data/battalion.sho", "rb");
+	    roadFile = fopen(DATADIR "/DATA/road.data", "rb");
 	    if (roadFile != NULL)
 		{
-		strcpy(dataPath, "./battalion.data/");
+		strcpy(dataPath, DATADIR);
 		fclose(roadFile);
 		}
 	    else
@@ -2950,7 +2950,7 @@ void initialization()
     if (dataPtr != NULL)
 	strncpy(scoredataPath, dataPtr, MAXPATH - 1);
     else
-	strcpy(scoredataPath, "/usr/tmp");
+	strcpy(scoredataPath, SCORESDIR);
 
     if (scoredataPath[strlen(scoredataPath)-1] != '/')
 	strcat(scoredataPath, "/");

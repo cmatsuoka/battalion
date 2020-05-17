@@ -89,13 +89,18 @@ OS = -DLINUXVERSION
 AUDIODEF = -DLINUXAUDIO
 
 
-# STEP 7: CHOOSE ANY OPTIMIZATIONS OR ADD ANY SPECIAL INCLUSIONS
+# STEP 7: CUSTOMIZE THE DEFAULT SYSTEM DATA AND SCORES DIRECTORIES
 # ------------------------------------------------------------
-#CFLAGS     = -O2  -I/usr/local/X11/include -I/usr/demo/SOUND/ -I./. $(AUDIODEF) $(OS)
-CFLAGS     = -O2 -Wall -I. $(AUDIODEF) $(OS)
+DATADIR   = /usr/share/games/battalion
+SCORESDIR = /var/lib/battalion
 
 
-# STEP 8: ADD ANY SPECIAL LIBRARY PATHS
+# STEP 8: CHOOSE ANY OPTIMIZATIONS OR ADD ANY SPECIAL INCLUSIONS
+# ------------------------------------------------------------
+CFLAGS     = -O2 -Wall -I. $(AUDIODEF) $(OS) -DDATADIR=\"$(DATADIR)\" -DSCORESDIR=\"$(SCORESDIR)\"
+
+
+# STEP 9: ADD ANY SPECIAL LIBRARY PATHS
 #         (USEFUL TO POINT TO WHERE THE MESA LIBRARIES RESIDE)
 # ------------------------------------------------------------
 LIBFLAGS     = 
