@@ -828,7 +828,7 @@ static    char musicEnglish[]		= "-Music";
 void showText3(int detail)
     {
 static    char andyEnglish[]		= "andy johnson's";
-static    char versionEnglish[]		= "1.3";
+static    char versionEnglish[]		= "1.4c";
 
     /************************/
     /* print battalion logo */
