@@ -84,7 +84,7 @@
 #define FNDELAY O_NDELAY
 #endif
 
-
+#include <AL/al.h>
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -290,11 +290,26 @@
 #define SLAG		    5
 #define CRASH		    6
 #define TECHSHOOT	    7
-#define MUSIC		    8	
+#define ELECTRIC            8
+#define TELEPORTER          9
+
+/************************/
+/*   music              */
+/************************/
+#define ID_MUSIC        1
+
+#define MUSIC_OFFSET   10
+
+#define PLAY_MUSIC      0
+#define DEMO_MUSIC      1
+#define DEFEAT_MUSIC    2
+#define SUCCESS_MUSIC   3
+
+#define MUSIC               8
 
 /* #define MAXMUSIC 36 */
-#define MAXMUSIC 5
-#define MAXDEADMUSIC 5
+#define MAXMUSIC 2
+#define MAXDEADMUSIC 2
 
 #define MAXSOUNDS 25
 
@@ -413,6 +428,7 @@ struct tank
 	int number;
 	char type;		    /* type of vehicle */
 	char subtype;		    /* sub type (for hero) */
+        ALuint source;              /* sound source */
 	};
 
 struct road
@@ -446,6 +462,7 @@ struct monsterInfo
 	int monsterGo;		    /* is the monster going forward? */
 	int monsterBack;	    /* is the monster going backward? */
 	int monsterMoving;	    /* is the monster moving? */
+        ALuint source;              /* sound source */
 	};
 
 struct targetInfo
@@ -558,13 +575,18 @@ void turnMusicOn();
 void toggleMusic();
 int getMusicOn();
 
-void checkSound(char *);
-void initSounds(void);
-void flushSounds(void);
-void soundKiller(int);
-void doSound(int);
-void InitAudio(char *,  char *, int);
-void OutAudio(int);
+int initSound();
+void exitSound();
+
+int doSound(ALuint nsource, int nbuffer, ALboolean loop);
+int doSoundAt(ALuint nsource, int nbuffer, ALboolean loop, float x, float y, float z);
+int stopSound(ALuint source);
+int stopAllSounds();
+ALuint getPlayersSource();
+ALuint getFreeSource();
+
+int playMusic(int source, ALboolean loop);
+int stopMusic();
 
 
 /****************************************************

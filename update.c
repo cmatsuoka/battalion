@@ -248,8 +248,7 @@ void updateBeam(struct monsterInfo * g,  struct targetInfo * t, float x, float z
     horz = m->headHorzRotate;
     vert = m->headVertRotate;
 
-
-    doSound(MONSTERBEAM);
+    //doSound(MONSTERBEAM);
         
     if (vert < 175)
 	R = 4;
@@ -423,7 +422,7 @@ void updateBeam(struct monsterInfo * g,  struct targetInfo * t, float x, float z
 		/* if so, slag it!                */
 		/**********************************/
 
-		doSound(SLAG);
+		//doSound(SLAG);
 	    
 		ttank->damage = -99;
 		}		

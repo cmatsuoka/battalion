@@ -85,8 +85,8 @@ OS = -DLINUXVERSION
 #         AUDIO THEN UNCOMMENT THE NEXT LINES, ELSE COMMENT THEM OUT
 #
 # ------------------------------------------------------------
-#AUDIOLIB = -laudio
-AUDIODEF = -DLINUXAUDIO
+AUDIOLIB = -lalut -lopenal
+AUDIODEF =
 
 
 # STEP 7: CUSTOMIZE THE DEFAULT SYSTEM DATA AND SCORES DIRECTORIES
@@ -97,7 +97,7 @@ SCORESDIR = /var/lib/battalion
 
 # STEP 8: CHOOSE ANY OPTIMIZATIONS OR ADD ANY SPECIAL INCLUSIONS
 # ------------------------------------------------------------
-CFLAGS     = -O2 -Wall -I. $(AUDIODEF) $(OS) -DDATADIR=\"$(DATADIR)\" -DSCORESDIR=\"$(SCORESDIR)\"
+CFLAGS     = -O2 -g -Wall -I. $(AUDIODEF) $(OS) -DDATADIR=\"$(DATADIR)\" -DSCORESDIR=\"$(SCORESDIR)\"
 
 
 # STEP 9: ADD ANY SPECIAL LIBRARY PATHS
@@ -111,8 +111,8 @@ LIBFLAGS     =
 
 TARGET 	= battalion
 
-OBJ 	= battalion.o audio.o net.o gprim.o graphics.o objects.o text.o update.o tk.o font.o soundIt.o
-LIBS    = -L./. -L/usr/X11R6/lib -lm -lX11 -lXext
+OBJ 	= battalion.o audio.o net.o gprim.o graphics.o objects.o text.o update.o tk.o font.o
+LIBS    = -lm -lX11 -lXext
 
 all:	$(TARGET)
 
@@ -120,7 +120,7 @@ all:	$(TARGET)
 #	$(CC) $(CFLAGS) $(LIBFLAG) $(OS) $(WHICHLIB) $(AUDIOLIB) -c $?
 
 $(TARGET): $(OBJ)
-	$(CC) -o $(TARGET) $(OBJ) $(LIBFLAGS) $(GLIB) $(LIBS) $(AUDIODEF)
+	$(CC) -o $(TARGET) $(OBJ) $(LIBFLAGS) $(GLIB) $(AUDIOLIB) $(LIBS)
 
 clean:
 	rm -f $(OBJ)
@@ -132,7 +132,6 @@ gprim.o: gprim.c battalion.h tk.h
 graphics.o: graphics.c battalion.h tk.h
 net.o: net.c battalion.h tk.h
 objects.o: objects.c battalion.h tk.h
-soundIt.o: soundIt.c
 text.o: text.c battalion.h tk.h
 tk.o: tk.c battalion.h tk.h
 update.o: update.c battalion.h tk.h
