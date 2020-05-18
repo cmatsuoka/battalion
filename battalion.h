@@ -59,31 +59,6 @@
 #include <sys/errno.h>
 #include <signal.h>
 
-#ifdef SGIVERSION
-#include <bstring.h>
-#endif
-
-#ifdef SOLARIS
-/* from Johan Hagman <Johan.Hagman@mailbox.swipnet.se> */
-# include <sys/stat.h>
-# include <sys/file.h>
-
-/* BSD compatibility */
-# define bzero(dst,len) memset(dst, 0, len)
-#endif
-
-#ifdef SUNAUDIO
-/* Audio support */
-# include <multimedia/libaudio.h>
-# include <multimedia/audio_device.h>
-#endif
-
-#ifdef HPVERSION
-/* to get non-blocking I/O under HP-UX */
-/* from Neil Harkin <T.N.Harkin@csc.liv.ac.uk> */
-#define FNDELAY O_NDELAY
-#endif
-
 #include <AL/al.h>
 
 #include <GL/gl.h>
@@ -100,13 +75,6 @@
 /* audio routines */
 /*****************/
 
-#ifdef SGIVERSION
-
-#include <audio.h>
-#include <audiofile.h>
-
-#endif
-
 /* added for the OpenGL version */
 #ifndef TRUE
 # define TRUE 1
@@ -120,26 +88,6 @@
 
 #define MAXTARGETS	    3
 
-/************************************/
-/* to try and speed up computations */
-/************************************/
-
-#ifdef SGIVERSION
-
-#define fabs fabsf
-#define sqrt fsqrt
-#define sin fsin
-#define cos fcos
-#define atan fatan
-#define atan2 atan2f
-
-#else
-
-#define amalloc(x,y)	malloc(x)
-#define afree(x,y)	free(x)
-#define acalloc(n,x,y)	calloc(n,x)
-
-#endif
 
 
 #define MONSTERFOGSTART		2.5
@@ -498,9 +446,6 @@ struct aSound
 
 struct sound
 	{
-#ifdef SGIVERSION
-	ALport audio_port;
-#endif
 	struct sound * next;
 	int type;
 	};
@@ -670,25 +615,24 @@ void setUnconnected(void);
 void setPortNumber(int);
 void setHostAddr(char *);
 
-void addNewNetworkTank(char *, struct tank *, void *, int);
+void addNewNetworkTank(char *, struct tank *, int);
 void updateNetworkTank(char *, struct tank *);
 void tellAboutAllTanks(struct sockaddr_in *, int, struct tank *);
 
-void updateClientMonster(char *, void *);
+void updateClientMonster(char *);
 
 
 int setUpClient(void);
 int setUpNetwork(void);
 void updateNetworkBuildings(char *, struct tree *);
-void updateNetworkMonsters(char *, long, void *);
+void updateNetworkMonsters(char *, long);
 int sendMessage(char *, struct sockaddr_in *, int);
 void processClient(time_t, int, int, struct tree *, struct tank *,
-    void * arena, int sizeTank, struct monsterInfo, int, int *);
+    int sizeTank, struct monsterInfo, int, int *);
 void tellAboutAllDeadBuildings(struct sockaddr_in *, int, int, int *);
 void processNetwork(time_t, int, int, struct tree *, struct tank *,
-    void *, struct monsterInfo, int, int, int *, int *);
-void addNetworkTarget(long, int, float, float, float, float, float,
-    int, void *);
+    struct monsterInfo, int, int, int *, int *);
+void addNetworkTarget(long, int, float, float, float, float, float, int);
 
 /*******************************
  * gprim.c

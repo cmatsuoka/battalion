@@ -1,5 +1,5 @@
 CC       = gcc
-CFLAGS   = -O2 -g -Wall -DLINUXVERSION -DDATADIR=\"$(DATADIR)\" -DSCOREDIR=\"$(SCOREDIR)\"
+CFLAGS   = -O2 -g -Wall -DDATADIR=\"$(DATADIR)\" -DSCOREDIR=\"$(SCOREDIR)\"
 LD       = gcc
 LDFLAGS  =
 INSTALL  = install

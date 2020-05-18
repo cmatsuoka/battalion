@@ -12,15 +12,13 @@
 /* battalion.c  v 1.3a                                                 */
 /* main routines for battalion                                         */
 /***********************************************************************/
-/*                                                */
-/* code within '#ifdef SOLARIS' by Johan Hagman   */
-/*                                                */
-/**************************************************/
 
 #include "battalion.h"
 
 
-/* openAL headers*/
+/******************/
+/* openAL headers */
+/******************/
 #include <AL/al.h>
 #include <AL/alut.h>
 extern ALfloat listenerOri[];
@@ -68,12 +66,7 @@ int lod;
 
 /* it would be nice to dynamically get these ... */
 int XMAXSCREEN = 1280;
-
-#ifdef SOLARIS
- int YMAXSCREEN = 1024;
-#else
- int YMAXSCREEN = 1040;
-#endif
+int YMAXSCREEN = 1040;
 
 /************/
 /* counters */
@@ -184,9 +177,6 @@ int multipleHighScores;
 
 struct projectile * tproj,  *deadproj;
 struct boom * tboom, *deadboom;
-
-void * arena;
-void * sharedmem;
 
 int sizeBoom;
 int sizeTank;
@@ -631,7 +621,7 @@ void addBoom(float x,  float y,  float z, struct monsterInfo* m)
     struct boom * tempboom2;
     struct boom tempboom;
     
-    tempboom2 = (struct boom *) amalloc(sizeBoom, arena);
+    tempboom2 = (struct boom *)malloc(sizeBoom);
 
     if (tempboom2 != NULL)
 	{
@@ -662,7 +652,7 @@ void addProjectile( float x,  float y,  float z, int type,
     struct projectile * temp;
     struct projectile tempProj;
  
-    temp = (struct projectile *) amalloc(sizeProjectile, arena);
+    temp = (struct projectile *)malloc(sizeProjectile);
 
     if (temp != NULL)
 	{
@@ -957,7 +947,7 @@ void updateProjectiles()
 	    {
 	    killer = temp->next;
 	    temp->next = temp->next->next;
-	    afree(killer, arena);   
+	    free(killer);   
 	    }
 	else
 	    temp = temp->next;
@@ -1113,7 +1103,7 @@ void updatetrees(struct tree * allTrees, int itsChristmas)
 	if (dead)
     	    {
 	    ttree->next = temptree->next;
-	    afree(temptree, arena);
+	    free(temptree);
 	    }
 	else
 	    ttree = ttree->next;
@@ -1668,7 +1658,7 @@ void updateTanks(struct tank * allTanks, float width, float height,
 	    else
 		{
                 doSoundAt(getFreeSource(),EXPLOSION, AL_FALSE, ttank->x, ttank->y, ttank->z);
-		afree(killertank, arena); 
+		free(killertank); 
 		} 
 	    }
 	else 
@@ -1676,7 +1666,7 @@ void updateTanks(struct tank * allTanks, float width, float height,
 		{
 		killertank = temptank->next;
 		temptank->next = temptank->next->next;
-		afree(killertank, arena);  
+		free(killertank);  
 
 		}
 	    else
@@ -1832,7 +1822,7 @@ void updateSlagTanks(struct tank * allSlags)
 	    {
 	    killertank = temptank->next;
 	    temptank->next = temptank->next->next;
-	    afree(killertank, arena);
+	    free(killertank);
 	    }
 	else
 	    temptank = temptank->next;
@@ -1968,7 +1958,7 @@ if ((!netUp) || (newtype == MASERTANK))
     blocked = 1;
     attempts = 0;
 
-    temptank = (struct tank *) amalloc(sizeTank, arena);
+    temptank = (struct tank *)malloc(sizeTank);
     
     if (temptank != NULL)
 	{
@@ -2071,7 +2061,7 @@ if ((!netUp) || (newtype == MASERTANK))
 	if (attempts >= 1500)
 	    {
 	    showError("Nowhere to put a new vehicle");
-	    afree(temptank, arena);
+	    free(temptank);
 	    }
 	else
 	    {
@@ -2141,7 +2131,7 @@ if ((!netUp) || (newtype == MASERTANK))
 				    temptank->minrange	= 0.5;
 				    temptank->speed	= TANKV;
 				    
-				    temptree = (struct tree *) amalloc(sizeof(struct tree), arena);
+				    temptree = (struct tree *)malloc(sizeof(struct tree));
 				    if (temptree != NULL)
 					{
 					temptree->x		= temptank->x;
@@ -2254,7 +2244,7 @@ void updateBooms(struct boom * allBooms, struct tank * tanklist)
 	    {
 	    killerb = tempboom->next;
 	    tempboom->next = tempboom->next->next;
-	    afree(killerb, arena);
+	    free(killerb);
 	    }
 	else
 	    tempboom = tempboom->next;
@@ -2267,7 +2257,7 @@ void buildHillPart(struct tree unitHill, int shape, float x, float z)
     {
     struct tree * temptree;
 
-    temptree = (struct tree *) amalloc(sizeof(struct tree), arena);
+    temptree = (struct tree *)malloc(sizeof(struct tree));
 
     if (temptree != NULL)
 	{
@@ -2323,7 +2313,7 @@ void setPlayConditions()
 	    {
 	    ttank = temptank;
 	    temptank= temptank->next;
-	    afree(ttank, arena);
+	    free(ttank);
 	    }
     
     tempboom = projectboom;
@@ -2331,7 +2321,7 @@ void setPlayConditions()
 	    {
 	    tempboom2 = tempboom;
 	    tempboom = tempboom->next;
-	    afree(tempboom2, arena);
+	    free(tempboom2);
 	    }
 
     temp = projectFlight;
@@ -2339,7 +2329,7 @@ void setPlayConditions()
 	    {
 	    killer = temp;
 	    temp = temp->next;
-	    afree(killer, arena);
+	    free(killer);
 	    }
 
     temptank = slaglist;
@@ -2347,7 +2337,7 @@ void setPlayConditions()
 	    {
 	    ttank = temptank;
 	    temptank = temptank->next;
-	    afree(ttank, arena);
+	    free(ttank);
 	    }
 
     temptree = treelist;
@@ -2355,7 +2345,7 @@ void setPlayConditions()
 	    {
 	    ttree = temptree;
 	    temptree = temptree->next;
-	    afree(ttree, arena);
+	    free(ttree);
 	    }
 
     temptarg = targets;
@@ -2363,7 +2353,7 @@ void setPlayConditions()
 	    {
 	    ttarget = temptarg;
 	    temptarg= temptarg->next;
-	    afree(ttarget, arena);
+	    free(ttarget);
 	    }
 
 
@@ -2371,22 +2361,22 @@ void setPlayConditions()
     /* set up the dummy head nodes*/
     /******************************/
 
-    projectFlight = (struct projectile *) amalloc(sizeProjectile, arena);
+    projectFlight = (struct projectile *)malloc(sizeProjectile);
     projectFlight->next = NULL;
 
-    projectboom = (struct boom *) amalloc(sizeBoom, arena);
+    projectboom = (struct boom *)malloc(sizeBoom);
     projectboom->next = NULL;
 
-    tanklist = (struct tank *) amalloc(sizeTank, arena);
+    tanklist = (struct tank *)malloc(sizeTank);
     tanklist->next = NULL;
 
-    slaglist = (struct tank *) amalloc(sizeTank, arena);
+    slaglist = (struct tank *)malloc(sizeTank);
     slaglist->next = NULL;
 
-    treelist = (struct tree *) amalloc(sizeof(struct tree), arena);
+    treelist = (struct tree *)malloc(sizeof(struct tree));
     treelist->next = NULL;
 
-    targets = (struct targetInfo *) amalloc(sizeof(struct targetInfo), arena);
+    targets = (struct targetInfo *)malloc(sizeof(struct targetInfo));
     targets->next = NULL;
 
     stopAllSounds();
@@ -2412,7 +2402,7 @@ void setPlayConditions()
 	{
 	do
 	    {
-	    temptree = (struct tree *) amalloc(sizeof(struct tree), arena);
+	    temptree = (struct tree *)malloc(sizeof(struct tree));
 	    if (temptree != NULL)
 		{
 		if(fscanf(roadFile,  "%f %f %d %d ", &x, &z, &type, &shape) == EOF) {
@@ -2463,7 +2453,7 @@ void setPlayConditions()
 	while (x || z || type || shape);
 	
 	treelist->next = treelist->next->next;
-	afree(temptree, arena);
+	free(temptree);
 
 	/**************************************************************************/
 	/* eliminate all trees that have been destroyed already in a network game */
@@ -2529,24 +2519,6 @@ void setPlayConditions()
 	buildingBoomSoFarCounter = 0;
 
     Googelon = resetMonsterParameters(Googelon);
-    
-
-/***********************************************************
- code to print out the state of the shared memory arena 
-
-	{
-	struct mallinfo mi;
-	
-	mi = amallinfo(arena);
-	fprintf(stderr, "--------------------------------------------------------------------------------\n");
-	fprintf(stderr, "%8d %8d %8d %8d %8d %8d %8d %8d %8d -start\n", 
-	    mi.arena, mi.ordblks, mi.smblks, mi.hblkhd,  mi.hblks, 
-	    mi.usmblks, mi.fsmblks, mi.uordblks, mi.fordblks);
-	fprintf(stderr, "--------------------------------------------------------------------------------\n");
-	fflush(stderr);
-	}
-	
-***********************************************************/
 }
 
     
@@ -2583,7 +2555,7 @@ void addRandomTarget()
 	
 	newMonster.energyRemaining = MAXLIFE / 2;	
     
-	nother = (struct targetInfo *) amalloc(sizeof(struct targetInfo), arena);
+	nother = (struct targetInfo *)malloc(sizeof(struct targetInfo));
 	
 	if (nother != NULL)
 	    {
@@ -2664,20 +2636,6 @@ void initialization()
     biggestTankNumberSent	    = 0;
     
     totalCounter		    = 0;
-
-    /************************************/
-    /* set up memory arena              */
-    /************************************/
-
-#ifdef SGIVERSION
-
-    sharedmem = calloc(1, ARENASIZE);
-    arena = acreate(sharedmem, ARENASIZE, 0, NULL, NULL); 
-    amallopt(M_FREEHD, 1, arena);
-    amallopt(M_CLRONFREE, 0, arena);
-    amallopt(M_MXFAST, 16, arena);
-
-#endif
 
     sizeBoom	    = sizeof(struct boom);
     sizeTank	    = sizeof(struct tank);
@@ -2992,7 +2950,7 @@ void initialization()
 	
 	fclose(roadFile);
 	 
-	roadSystem = (struct road *) acalloc(i, sizeof(struct road), arena);
+	roadSystem = (struct road *)calloc(i, sizeof(struct road));
 	if (roadSystem == NULL)
 	    showError("Could not allocate array for road.data\n");
 	else
@@ -3077,16 +3035,6 @@ void initialization()
 	    T[0].name[0] = T[1].name[0] = T[2].name[0] = 0;
 	    
 	    fclose(hiScoreFile);
-
-# ifdef SOLARIS
-
-	    /* Make hiscore file read/writeable for everyone */
-	    if (chmod(scorefullPath, 0666))
-		{
-		sprintf(textBuffer, "Couldn't change permission of high score file: %s", hiScoreFile);	    
-		showError(textBuffer);
-		}
-# endif
 	    }
 	}
     else
@@ -4449,7 +4397,7 @@ void doUpdate()
 		    addProjectile( temptarg->x-0.2, PLANEY+0.25, temptarg->z-0.2, 3, 0, -0.003, 0, 10000, NULL);
 		    }
 		    
-		afree(temptarg, arena);
+		free(temptarg);
 		}
 	    else
 		temptarget = temptarget->next;
@@ -5451,31 +5399,20 @@ void id()
 
     if (netUp)
 	processNetwork(now, mainCounter, totalCounter, treelist,
-		       tanklist, arena, Googelon, buildingBoomSoFarCounter, 
+		       tanklist, Googelon, buildingBoomSoFarCounter, 
 		       buildingBoomThisFrameCounter, buildingBoomSoFar,
 		       buildingBoomThisFrame);
 
     if (client)
 	processClient(now, mainCounter, totalCounter, treelist,
-		      tanklist, arena, sizeTank, Googelon,
+		      tanklist, sizeTank, Googelon,
 		      buildingBoomThisFrameCounter, buildingBoomThisFrame);
     
     if (!paused)
 	doUpdate();
 	
-#ifdef SOLARIS
-    else	/* sleep a while */
-	{
-	static struct timespec rqtp, rmtp;
-	rqtp.tv_sec = 0;
-	rqtp.tv_nsec = 500 * 1000000;	/* 500 ms delay */
-	nanosleep(&rqtp, &rmtp);
-	}
-#endif
-#ifdef SGIVERSION
     else
-	sleep(1);
-#endif
+	usleep(500000000);
 
     /*************************************************/
     /* rotate the plane in demo mode omniscient view */
@@ -5566,19 +5503,7 @@ void id()
     while (((endTime.tv_sec - startTime.tv_sec) * 1000 + 
 	    (endTime.tv_usec - startTime.tv_usec) * 0.001) < 45)
 	{
-#ifdef SGIVERSION
-	sginap(1);
-# endif
-# ifdef SOLARIS
-	static struct timespec rqtp, rmtp;
-
-	rqtp.tv_sec = 0;
-	rqtp.tv_nsec = 2 * 1000000;	/* 2 ms delay */
-	nanosleep(&rqtp, &rmtp);
-# endif
-#ifdef LINUXVERSION
 	usleep(2000); /* 2ms delay */
-#endif
 	gettimeofday(&endTime, NULL);
 	}
 
@@ -5591,11 +5516,7 @@ void showCommands(char * progName)
     {
     fprintf (stderr, "\n\n");
 
-#ifdef SOLARIS
-    fprintf (stderr, "Usage: %s [-a] [-b] [-d level] [-m] [-s] [-help]\n", progName);
-#else
     fprintf (stderr, "Usage: %s [-a] [-b] [-d level] [-m] [-s] [-c] [-h #] [-n] [-p #] [-help]\n", progName);
-#endif
 
     fprintf (stderr, "  -a)lone        fight alone\n");
     fprintf (stderr, "  -b)ackdrop     hide the overlays\n");
@@ -5604,11 +5525,7 @@ void showCommands(char * progName)
     fprintf (stderr, "  -s)ound        initially turn on the sound effects\n");
     fprintf (stderr, "  -help          show this list of command line options\n\n");
 
-#ifdef SOLARIS
-    fprintf (stderr, "Multiplayer options not yet supported:\n");
-#else
-     fprintf (stderr, "   Multiplayer options:\n");
-#endif
+    fprintf (stderr, "   Multiplayer options:\n");
 
     fprintf (stderr, "  -c)lient       declare yourself as a client in a net game\n");
     fprintf (stderr, "  -h)ost #       give the address of the host in a net game\n");
@@ -5630,11 +5547,7 @@ int main (int argc, char*argv[])
     int port;
     char portName[40];
 
-#if defined SGIVERSION || defined SOLARIS || defined LINUXVERSION
-    
     gettimeofday(&startTime, NULL);
-
-#endif
 
     frames = 0;
 

@@ -268,8 +268,7 @@ void updateNetworkBuildings(char * recvline, struct tree * treelist)
 
  /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void addNewNetworkTank(char * recvline, struct tank * tanklist, 
-    void * arena, int sizeTank)
+void addNewNetworkTank(char *recvline, struct tank *tanklist, int sizeTank)
     {
     char command[MAXLINE];
     float x, z;
@@ -293,7 +292,7 @@ void addNewNetworkTank(char * recvline, struct tank * tanklist,
 	{
     fprintf(stderr, "ADDING A NEW TANK %d %f %f %f %f %d \n", number, x, z, finRange, speed, type);
 
-	temptank = (struct tank *) amalloc(sizeTank, arena);
+	temptank = (struct tank *)malloc(sizeTank);
 
 	temptank->goforit	= NULL;
 	
@@ -395,7 +394,7 @@ void tellAboutAllTanks(struct sockaddr_in * cli, int length
 
  /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void updateNetworkMonsters(char * recvline, long clientFrom, void * arena)
+void updateNetworkMonsters(char *recvline, long clientFrom)
     {
     struct targetInfo * tempTarget,  *thaOne;
     
@@ -450,14 +449,14 @@ void updateNetworkMonsters(char * recvline, long clientFrom, void * arena)
 	/*******************************/
 	
 	addNetworkTarget(clientFrom, n_monsterType, n_horzrot, n_vertrot, 
-	    n_energy, n_x + globalxshift, n_z + globalzshift, n_beamOn, arena);
+	    n_energy, n_x + globalxshift, n_z + globalzshift, n_beamOn);
 	}
     }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 void addNetworkTarget(long fromNum, int monsterType, float horz, float vert, 
-			float energy, float x, float z, int beamOn, void * arena)
+			float energy, float x, float z, int beamOn)
     {
     struct monsterInfo newMonster;
     struct targetInfo * nother, *temp;
@@ -506,7 +505,7 @@ void addNetworkTarget(long fromNum, int monsterType, float horz, float vert,
 	newMonster.monster  = monsterType;
 	newMonster	    = resetMonsterParameters(newMonster);
     
-	nother = (struct targetInfo *) amalloc(sizeof(struct targetInfo), arena);
+	nother = (struct targetInfo *)malloc(sizeof(struct targetInfo));
 	
 	if (nother != NULL)
 	    {
@@ -532,7 +531,7 @@ void addNetworkTarget(long fromNum, int monsterType, float horz, float vert,
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void updateClientMonster(char * recvline, void * arena)
+void updateClientMonster(char *recvline)
     {
     struct targetInfo * tempTarget,  *thaOne;
     
@@ -591,7 +590,7 @@ void updateClientMonster(char * recvline, void * arena)
 	/*******************************/
 	
 	addNetworkTarget(recvfrom, n_monsterType, n_horzrot, n_vertrot, 
-	    n_energy, n_x + globalxshift, n_z + globalzshift, n_beamOn, arena);
+	    n_energy, n_x + globalxshift, n_z + globalzshift, n_beamOn);
 	}
     }
 
@@ -615,7 +614,7 @@ int sendMessage(char * mesg,  struct sockaddr_in * cli, int length)
  /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
    
 void processClient(time_t now, int mainCounter, int totalCounter,
-    struct tree * treelist, struct tank * tanklist, void * arena,
+    struct tree * treelist, struct tank * tanklist,
     int sizeTank, struct monsterInfo Googelon,
     int buildingBoomThisFrameCounter, int buildingBoomThisFrame[20])
     {
@@ -717,14 +716,14 @@ void processClient(time_t now, int mainCounter, int totalCounter,
 		 * to the client
 		 */
 		    {
-		    updateNetworkMonsters(recvline, clientFrom, arena);
+		    updateNetworkMonsters(recvline, clientFrom);
 		    lastMonsterUpdate = frameNum;
 		    }
 		}
 
 	    if (strcmp(command, MESG_NEW_TANK) == 0)
 		{
-		addNewNetworkTank(recvline, tanklist, arena, sizeTank);
+		addNewNetworkTank(recvline, tanklist, sizeTank);
 		}
 
 	    if (strcmp(command, MESG_UPDATE_TANK) == 0)
@@ -737,7 +736,7 @@ void processClient(time_t now, int mainCounter, int totalCounter,
 		}
 	    if (strcmp(command, MESG_CLIENT_CLIENT_UPDATE) == 0)
 		{
-		updateClientMonster(recvline, arena);
+		updateClientMonster(recvline);
 		}
 	    }
 		    
@@ -767,7 +766,7 @@ void tellAboutAllDeadBuildings(struct sockaddr_in * cli, int length,
   /* there is now a connected = 0 in setPlayConditions!!! */
    
 void processNetwork(time_t now, int mainCounter, int totalCounter,
-    struct tree * treelist, struct tank * tanklist, void * arena, 
+    struct tree * treelist, struct tank * tanklist,
     struct monsterInfo Googelon, int buildingBoomSoFarCounter, 
     int buildingBoomThisFrameCounter, int buildingBoomSoFar[800], 
     int buildingBoomThisFrame[20])
@@ -847,7 +846,7 @@ void processNetwork(time_t now, int mainCounter, int totalCounter,
 		    {
 		    if (frameNumber > lastClientMonsterUpdate[thisClient])
 			{
-			updateNetworkMonsters(recvline, recvFrom, arena);
+			updateNetworkMonsters(recvline, recvFrom);
 			lastClientMonsterUpdate[thisClient] = frameNumber;
 			
 			/*******************************************/

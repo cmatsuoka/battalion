@@ -15,9 +15,9 @@
 
 #include "battalion.h"
 
-    /*************/
-    /* colours   */
-    /*************/
+/*************/
+/* colours   */
+/*************/
 
 extern float colorolive[4];
 extern float  planeGreen[4];
@@ -808,14 +808,12 @@ static    char musicEnglish[]		= "-Music";
 	tkDrawStr(strokeBase, showcaseEnglish);
     glPopMatrix();
 
-#ifndef SGIVERSION
     glPushMatrix();
 	glTranslatef(-2.75,  -5,  0);
 
 	tkDrawStr(strokeBase,unavailablestring);
 
     glPopMatrix();
-#endif
 
     glPopAttrib();
     }
