@@ -36,10 +36,10 @@ install: all
 audio.o: audio.c audio.h battalion.h tk.h
 battalion.o: battalion.c battalion.h tk.h audio.h
 font.o: font.c tk.h
-gprim.o: gprim.c battalion.h tk.h
-graphics.o: graphics.c battalion.h tk.h
+gprim.o: gprim.c gprim.h battalion.h tk.h
+graphics.o: graphics.c battalion.h tk.h gprim.h
 net.o: net.c battalion.h tk.h
-objects.o: objects.c battalion.h tk.h
+objects.o: objects.c battalion.h tk.h gprim.h
 text.o: text.c battalion.h tk.h
 tk.o: tk.c battalion.h tk.h
 update.o: update.c battalion.h tk.h

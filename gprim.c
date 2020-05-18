@@ -13,6 +13,7 @@
 /* primitive graphics routines for battalion                           */
 /***********************************************************************/
 
+#include "gprim.h"
 #include "battalion.h"
 
     GLUquadricObj *qobj;
