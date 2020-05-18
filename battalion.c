@@ -4462,8 +4462,8 @@ void goToMonsterView(int eyeball)
 
     if (lod >= 2)
 	{
-	glFogi(GL_FOG_START,  MONSTERFOGSTART);
-	glFogi(GL_FOG_END,  MONSTERFOGEND);
+	glFogf(GL_FOG_START, MONSTERFOGSTART);
+	glFogf(GL_FOG_END, MONSTERFOGEND);
 
 	glEnable(GL_FOG);		    
 	}
@@ -4912,7 +4912,7 @@ struct monsterInfo autopilot(float centerX, float centerZ, struct monsterInfo th
     float alphaBig;
     float modHead;
     float y, ang, r, modR;
-    int speed, speed2;
+    float speed, speed2;
     int t;
     float rad;
     float tx, tz;
@@ -5161,7 +5161,7 @@ struct monsterInfo autopilot(float centerX, float centerZ, struct monsterInfo th
     if (modHead > 3600)
 	modHead -= 3600;
 
-    speed = (int) (ang * RAD_TO_BIG_DEG - modHead);
+    speed = ang * RAD_TO_BIG_DEG - modHead;
     if (speed > 1800)
 	speed -= 3600;
     else if (speed < - 1800)
@@ -5169,9 +5169,9 @@ struct monsterInfo autopilot(float centerX, float centerZ, struct monsterInfo th
     
     speed = speed / 15;
     if (speed > 0.75 * thaMonster.xspeed)
-	speed = (int) (0.75 * thaMonster.xspeed);
+	speed = 0.75 * thaMonster.xspeed;
     if (speed < -0.75 * thaMonster.xspeed)
-	speed = (int) (-0.75 * thaMonster.xspeed);
+	speed = -0.75 * thaMonster.xspeed;
     
     thaMonster.headHorzRotate += speed;
     offsetX = 0.8*offsetX - 0.2*(speed * 0.05); /* used to bank flutter in demo mode*/
@@ -5230,7 +5230,7 @@ struct monsterInfo autopilot(float centerX, float centerZ, struct monsterInfo th
 
     alphaBig = atan(y / modR) * RAD_TO_BIG_DEG;
     
-    speed2 = (int) (fabs(alphaBig - thaMonster.headVertRotate))/15;
+    speed2 = fabs(alphaBig - thaMonster.headVertRotate)/15;
     
     if (alphaBig > thaMonster.headVertRotate)
 	thaMonster.headVertRotate += speed2;

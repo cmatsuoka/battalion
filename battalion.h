@@ -91,7 +91,7 @@
 
 
 #define MONSTERFOGSTART		2.5
-#define MONSTERFOGEND		6
+#define MONSTERFOGEND		6.0
 
 #define ARMYFOGSTART		4
 #define ARMYFOGEND		12
