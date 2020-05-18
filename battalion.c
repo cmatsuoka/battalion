@@ -3043,7 +3043,7 @@ void initialization()
     if (dataPtr != NULL)
 	strncpy(scoredataPath, dataPtr, MAXPATH - 1);
     else
-	strcpy(scoredataPath, SCORESDIR);
+	strcpy(scoredataPath, SCOREDIR);
 
     if (scoredataPath[strlen(scoredataPath)-1] != '/')
 	strcat(scoredataPath, "/");

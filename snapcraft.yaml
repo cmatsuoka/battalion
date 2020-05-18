@@ -53,10 +53,15 @@ parts:
       - libopenal1
       - libpulse0
     override-build: |
-      make
-      mkdir -p "$SNAPCRAFT_PART_INSTALL"/usr/bin "$SNAPCRAFT_PART_INSTALL"/usr/share/games/battalion
-      cp battalion "$SNAPCRAFT_PART_INSTALL"/usr/bin
-      cp -rap DATA SOUNDS MUSIC TEXTURES "$SNAPCRAFT_PART_INSTALL"/usr/share/games/battalion
+      make install DESTDIR="$SNAPCRAFT_PART_INSTALL" \
+        BINDIR=/usr/bin \
+        MANDIR=/usr/share/man/man6 \
+        DATADIR=/usr/share/games/battalion \
+        SCOREDIR=/var/games/battalion
+      chmod 0755 "$SNAPCRAFT_PART_INSTALL"/usr/bin/battalion
     prime:
       - -usr/share/doc
       - -usr/share/man
+      - -usr/share/libsensors4
+      - -usr/share/lintian
+      - -usr/share/X11/locale
