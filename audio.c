@@ -143,10 +143,12 @@ int initSound(char *dataPath)
     else
 	    maxSources = NUM_SOURCES;
 	
-	/*  source[0] is the monster source, source[1] is music source */
+   /* source[0] is the monster source, source[1] is music source */
+   float gain = 0.4f;  // TODO: make it configurable
+   alSourcef(sources[1], AL_GAIN, gain);
    for(i=2; i<maxSources; i++)
    {
-        alSourcef(sources[i],AL_GAIN,1.0f);
+        alSourcef(sources[i],AL_GAIN, gain);
         alSourcef(sources[i],AL_PITCH,1.0f);
         alSource3f(sources[i],AL_POSITION,0,0,0);
         alSource3f(sources[i],AL_VELOCITY,0,0,0);
@@ -221,7 +223,7 @@ int isIdle(ALuint nsource)
 
 ALuint getPlayersSource()
 {
-    /* Our monster is always at 0,0,0*/
+    /* Our monster is always at 0,0,0 */
     alSource3f(sources[0],AL_POSITION, 0,0,0);
     return sources[0];
 }
