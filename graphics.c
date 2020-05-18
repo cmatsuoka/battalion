@@ -14,7 +14,10 @@
 /***********************************************************************/
 
 #include "battalion.h"
+#include "graphics.h"
+#include "objects.h"
 #include "gprim.h"
+#include "text.h"
 
     /*************/
     /* colours   */
@@ -478,7 +481,7 @@ void drawFighter(void)
 /* draw Googelon                                                 */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawMonster(struct monsterInfo monster, int counter,
+void drawMonster(struct monsterInfo *monster, int counter,
 		int itsChristmas, int detail)
     {    
     float v[4];
@@ -487,20 +490,20 @@ void drawMonster(struct monsterInfo monster, int counter,
     /* googelon's shadow */
     /*********************/
 
-static    float googShadow1[3] = {0.1, SHADOWS, -0.5};
-static    float googShadow2[3] = {0.0, SHADOWS, -0.7};
-static    float googShadow3[3] = {-0.1, SHADOWS, -0.5};
+    static float googShadow1[3] = {0.1, SHADOWS, -0.5};
+    static float googShadow2[3] = {0.0, SHADOWS, -0.7};
+    static float googShadow3[3] = {-0.1, SHADOWS, -0.5};
 
     glPushMatrix();
 
-	glRotatef(.1*monster.headHorzRotate, 0, 1, 0);
+	glRotatef(.1*monster->headHorzRotate, 0, 1, 0);
 
 	/********/
 	/* head */
 	/********/
 
 	glPushMatrix();
-	    glRotatef(.1*monster.headVertRotate, 1, 0, 0);
+	    glRotatef(.1*monster->headVertRotate, 1, 0, 0);
 
 	    glCallList(monsterHead);
 	    	    
@@ -549,19 +552,19 @@ static    float googShadow3[3] = {-0.1, SHADOWS, -0.5};
 	/***********************/
 
 	glPushMatrix();
-	    glTranslatef(0.2,  monster.rot1,  monster.rot2);
+	    glTranslatef(0.2,  monster->rot1,  monster->rot2);
 	    glCallList(monsterleg);
-	    glTranslatef(-0.4,   -2*monster.rot1,  -2*monster.rot2);
+	    glTranslatef(-0.4,   -2*monster->rot1,  -2*monster->rot2);
 	    glCallList(monsterleg);
 	glPopMatrix();
 
-	if ((!monster.monsterIsDead) && (detail > 0))
+	if ((!monster->monsterIsDead) && (detail > 0))
 	      {
 	      glColor4fv(colorblack);
 	      
-	      shadow (0.0,   0.0,          0.2, 0.2);
-	      shadow (0.2,   monster.rot2, 0.1, 0.15);
-	      shadow (-0.2, -monster.rot2, 0.1, 0.15);
+	      shadow (0.0,   0.0,           0.2, 0.2);
+	      shadow (0.2,   monster->rot2, 0.1, 0.15);
+	      shadow (-0.2, -monster->rot2, 0.1, 0.15);
 	      }
 
 	/********/
@@ -590,7 +593,7 @@ static    float googShadow3[3] = {-0.1, SHADOWS, -0.5};
 		glPopMatrix();
 		}
 
-	    if ((!monster.monsterIsDead) && (detail > 0))
+	    if ((!monster->monsterIsDead) && (detail > 0))
 		{
 		glColor4fv(colorblack);
 		
@@ -613,7 +616,7 @@ static    float googShadow3[3] = {-0.1, SHADOWS, -0.5};
 /* draw SIMPLIFIED Googelon (to save time in monsterview)        */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawSimpleMonster(struct monsterInfo monster, int counter,
+void drawSimpleMonster(struct monsterInfo *monster, int counter,
 		int itsChristmas, int detail)
     {    
     float v[4];
@@ -624,14 +627,14 @@ void drawSimpleMonster(struct monsterInfo monster, int counter,
 
     glPushMatrix();
 
-	glRotatef(.1*monster.headHorzRotate, 0, 1, 0);
+	glRotatef(.1*monster->headHorzRotate, 0, 1, 0);
 
 	/********/
 	/* head */
 	/********/
 
 	glPushMatrix();
-	    glRotatef(.1*monster.headVertRotate, 1, 0, 0);
+	    glRotatef(.1*monster->headVertRotate, 1, 0, 0);
 
 	    glCallList(monsterSimpleHead);
 	    	    
@@ -681,25 +684,25 @@ void drawSimpleMonster(struct monsterInfo monster, int counter,
 	/***********************/
 
 	glPushMatrix();
-	    glTranslatef(0.2,  monster.rot1,  monster.rot2);
+	    glTranslatef(0.2, monster->rot1, monster->rot2);
 
-	    makercubeTopBack( 0.0,   PLANEY+0.2,  0.0,   0.1,  0.2,  0.1,  colorred);
-	    makercubeTopBack( 0.0,   PLANEY+0.06, 0.17,  0.1,  0.06, 0.08, colorred);
+	    makercubeTopBack( 0.0, PLANEY+0.2,  0.0,   0.1,  0.2,  0.1,  colorred);
+	    makercubeTopBack( 0.0, PLANEY+0.06, 0.17,  0.1,  0.06, 0.08, colorred);
 
-	    glTranslatef(-0.4,   -2*monster.rot1,  -2*monster.rot2);
+	    glTranslatef(-0.4, -2*monster->rot1, -2*monster->rot2);
 
-	    makercubeTopBack( 0.0,   PLANEY+0.2,  0.0,   0.1,  0.2,  0.1,  colorred);
-	    makercubeTopBack( 0.0,   PLANEY+0.06, 0.17,  0.1,  0.06, 0.08, colorred);
+	    makercubeTopBack( 0.0, PLANEY+0.2,  0.0,   0.1,  0.2,  0.1,  colorred);
+	    makercubeTopBack( 0.0, PLANEY+0.06, 0.17,  0.1,  0.06, 0.08, colorred);
 
 	glPopMatrix();
 
-	if ((!monster.monsterIsDead) && (detail > 0))
+	if ((!monster->monsterIsDead) && (detail > 0))
 	      {
 	      glColor4fv(colorblack);
 	      
-	      shadow (0.0,   0.0,          0.2, 0.2);
-	      shadow (0.2,   monster.rot2, 0.1, 0.15);
-	      shadow (-0.2, -monster.rot2, 0.1, 0.15);
+	      shadow (0.0,   0.0,           0.2, 0.2);
+	      shadow (0.2,   monster->rot2, 0.1, 0.15);
+	      shadow (-0.2, -monster->rot2, 0.1, 0.15);
 	      }
 
 	    /********/
@@ -737,7 +740,7 @@ void drawSimpleMonster(struct monsterInfo monster, int counter,
 /* Draw the Vapour                                               */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawVapour(struct monsterInfo monster, int itsChristmas, int detail)
+void drawVapour(struct monsterInfo *monster, int itsChristmas, int detail)
     {
     register int i;
     glPushMatrix();
@@ -745,22 +748,22 @@ void drawVapour(struct monsterInfo monster, int itsChristmas, int detail)
     if (detail > 0)
 	glEnable(GL_BLEND);
 	
-    glRotatef(0.1 * monster.headHorzRotate, 0, 1, 0);
+    glRotatef(0.1 * monster->headHorzRotate, 0, 1, 0);
 
     colorwhite2[0] = 1;
     colorwhite2[1] = 1;
     colorwhite2[2] = 1;
 
-    if (monster.monsterIsDead)
+    if (monster->monsterIsDead)
 	{
 	if (detail == -1)
 	    {
-	    colorwhite2[0] = 1 - monster.deadCount * 0.022;
-	    colorwhite2[1] = 1 - monster.deadCount * 0.022;
-	    colorwhite2[2] = 1 - monster.deadCount * 0.022;
+	    colorwhite2[0] = 1 - monster->deadCount * 0.022;
+	    colorwhite2[1] = 1 - monster->deadCount * 0.022;
+	    colorwhite2[2] = 1 - monster->deadCount * 0.022;
 	    }
 
-	colorwhite2[3] = 1 - monster.deadCount * 0.022;
+	colorwhite2[3] = 1 - monster->deadCount * 0.022;
 	glColor4fv(colorwhite2);
 	}
     else if (itsChristmas)
@@ -770,10 +773,10 @@ void drawVapour(struct monsterInfo monster, int itsChristmas, int detail)
 
     if (detail == 0)
 	for(i = 0; i < (int) (MAXTRIBUTES/1.5); i++)
-	    andysphdraw(monster.a[i], 0);
+	    andysphdraw(monster->a[i], 0);
     else
 	for(i=0; i<MAXTRIBUTES; i++)
-	    andysphdraw(monster.a[i], 0);
+	    andysphdraw(monster->a[i], 0);
 
     glDisable(GL_BLEND);
 
@@ -787,7 +790,7 @@ void drawVapour(struct monsterInfo monster, int itsChristmas, int detail)
 /* draw Flutter                                                  */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawFlutter(struct monsterInfo monster, int counter,
+void drawFlutter(struct monsterInfo *monster, int counter,
 		int itsChristmas, float offsetX, int thaView, int detail)
     {
     float rotAmt;
@@ -796,11 +799,11 @@ void drawFlutter(struct monsterInfo monster, int counter,
     
 
     glPushMatrix();
-	glRotatef(0.1 * monster.headHorzRotate, 0, 1, 0);
+	glRotatef(0.1 * monster->headHorzRotate, 0, 1, 0);
 
 	/* shadow */
 
-	if (!monster.monsterIsDead)
+	if (!monster->monsterIsDead)
 	    {
 	    glPushAttrib(GL_DEPTH_BUFFER_BIT);
 	    glPushAttrib(GL_COLOR_BUFFER_BIT);
@@ -827,7 +830,7 @@ void drawFlutter(struct monsterInfo monster, int counter,
 		glCallList(flutterXMas);		
 		
 	    glPushMatrix();
-		glRotatef(monster.headVertRotate * 0.05, 1, 0, 0);
+		glRotatef(monster->headVertRotate * 0.05, 1, 0, 0);
 
 		glCallList(flutterHead);
 	    glPopMatrix();
@@ -860,43 +863,43 @@ void drawFlutter(struct monsterInfo monster, int counter,
 /* draw Techs                                                    */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawTechs(struct monsterInfo monster, int detail)
+void drawTechs(struct monsterInfo *monster, int detail)
     {
     glPushMatrix();
 
-    glRotatef(0.1 * monster.headHorzRotate, 0, 1, 0);
+    glRotatef(0.1 * monster->headHorzRotate, 0, 1, 0);
  
-    if (monster.deadCount < 45)
+    if (monster->deadCount < 45)
 	{    
 	glPushMatrix();
-	    glRotatef(0.1 * monster.headVertRotate, 1, 0, 0);
+	    glRotatef(0.1 * monster->headVertRotate, 1, 0, 0);
 	    glCallList(techsHead);    
 	glPopMatrix();   
 
 	glCallList(techsBody);
 	}
     
-    if ((!monster.monsterIsDead) && (detail > 0))
+    if ((!monster->monsterIsDead) && (detail > 0))
 	{
 	glCallList(techsShadow);
 	}
 	
     glPopMatrix();
 		    
-    if (monster.deadCount >= 45)
+    if (monster->deadCount >= 45)
 	{
 	glPushMatrix();
-	    glTranslatef(monster.timeDead * 0.05 + 0.2,  -monster.timeDead * 0.05,   monster.timeDead * 0.05);
-	    glRotatef(monster.timeDead*10, 1, 0, 0);
-	    glRotatef(monster.timeDead*15, 0, 1, 0);
+	    glTranslatef(monster->timeDead * 0.05 + 0.2,  -monster->timeDead * 0.05,   monster->timeDead * 0.05);
+	    glRotatef(monster->timeDead*10, 1, 0, 0);
+	    glRotatef(monster->timeDead*15, 0, 1, 0);
 	    makercube(0.0,    0, 0, 0.03, 0.25, 0.2, colorgrey2);
 	    makercube(0.011,  0, 0, 0.02, 0.2, 0.15, colorblack);
 	glPopMatrix();
 
 	glPushMatrix();
-	    glTranslatef(-monster.timeDead * 0.05 - 0.2,  monster.timeDead * 0.05,   monster.timeDead * 0.05);
-	    glRotatef(monster.timeDead*10, 1, 0, 0);
-	    glRotatef(monster.timeDead*15, 0, 1, 0);
+	    glTranslatef(-monster->timeDead * 0.05 - 0.2,  monster->timeDead * 0.05,   monster->timeDead * 0.05);
+	    glRotatef(monster->timeDead*10, 1, 0, 0);
+	    glRotatef(monster->timeDead*15, 0, 1, 0);
 	    makercube( 0.0,   0, 0, 0.03, 0.25, 0.2, colorgrey2);
 	    makercube(-0.011, 0, 0, 0.02, 0.2, 0.15, colorblack);
 	glPopMatrix();
@@ -909,23 +912,23 @@ void drawTechs(struct monsterInfo monster, int detail)
 /* draw SIMPLE Techs                                             */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawSimpleTechs(struct monsterInfo monster, int detail)
+void drawSimpleTechs(struct monsterInfo *monster, int detail)
     {
     glPushMatrix();
 
-    glRotatef(0.1 * monster.headHorzRotate, 0, 1, 0);
+    glRotatef(0.1 * monster->headHorzRotate, 0, 1, 0);
  
-    if (monster.deadCount < 45)
+    if (monster->deadCount < 45)
 	{    
 	glPushMatrix();
-	    glRotatef(0.1 * monster.headVertRotate, 1, 0, 0);
+	    glRotatef(0.1 * monster->headVertRotate, 1, 0, 0);
 	    glCallList(techsSimpleHead);    
 	glPopMatrix();   
 
 	glCallList(techsSimpleBody);
 	}
     
-    if ((!monster.monsterIsDead) && (detail > 0))
+    if ((!monster->monsterIsDead) && (detail > 0))
 	{
 	glCallList(techsShadow);
 	}
@@ -3177,7 +3180,7 @@ void drawMaser(float sourceX, float sourceY, float sourceZ,
 /* draw all tanks on the battlefield                             */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawTanks(struct tank * allTanks,  int counter, struct monsterInfo G,
+void drawTanks(struct tank * allTanks,  int counter, struct monsterInfo *G,
 		struct targetInfo * targs, int detail, int view, int wid)
 
     {
@@ -3229,9 +3232,9 @@ void drawTanks(struct tank * allTanks,  int counter, struct monsterInfo G,
 
 	if (nearestMonster == NULL)
 	    {
-	    monsterIsDead = G.monsterIsDead;
-	    height = G.height;
-	    bottom = G.bottom;
+	    monsterIsDead = G->monsterIsDead;
+	    height = G->height;
+	    bottom = G->bottom;
 	    xloc = 0;
 	    zloc = 0;
 	    }

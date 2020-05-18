@@ -14,6 +14,8 @@
 /***********************************************************************/
 
 #include "battalion.h"
+#include "objects.h"
+#include "graphics.h"
 #include "gprim.h"
 
     /*************/

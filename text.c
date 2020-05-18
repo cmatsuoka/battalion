@@ -14,6 +14,8 @@
 /***********************************************************************/
 
 #include "battalion.h"
+#include "text.h"
+#include "graphics.h"
 
 /*************/
 /* colours   */
@@ -276,7 +278,7 @@ static float energyBar[4][3] = {
 
 void showScores(int itsChristmas, struct score* gscore, struct score* vscore,
 		struct score* tscore, struct score* fscore, 
-		struct monsterInfo monster, int counter,
+		struct monsterInfo *monster, int counter,
 		float offsetX, int detail)
     {
     char textString[TEXT_SIZE];
@@ -295,7 +297,7 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
     /* these monsters are always alive */
     /***********************************/
    
-    tempMonster 		= monster;
+    memcpy(&tempMonster, monster, sizeof(tempMonster));
     tempMonster.energyRemaining = 100;
     tempMonster.monsterIsDead 	= 0;
     tempMonster.deadCount 	= 0;
@@ -345,25 +347,25 @@ glPushAttrib(GL_DEPTH_BUFFER_BIT);
     glPushMatrix();
 	glTranslatef(-0.8,  0.14,  7.2);
 	glScalef(.2,  .2,  .2);
-	drawMonster(tempMonster, counter, itsChristmas, detail);
+	drawMonster(&tempMonster, counter, itsChristmas, detail);
     glPopMatrix();
 
     glPushMatrix();
 	glTranslatef(-0.8,  -0.23,  7.2);
 	glScalef(.2,  .2,  .2);
-	drawVapour(tempMonster, itsChristmas, detail);
+	drawVapour(&tempMonster, itsChristmas, detail);
     glPopMatrix();
 	
     glPushMatrix();
 	glTranslatef(+.14,  0.1,  7.2);
 	glScalef(.2,  .2,  .2);
-	drawTechs(tempMonster, detail);
+	drawTechs(&tempMonster, detail);
     glPopMatrix();
 
     glPushMatrix();
 	glTranslatef(+.14,  -0.26,  7.2);
 	glScalef(.2,  .2,  .2);
-	drawFlutter(tempMonster, counter, itsChristmas, offsetX, OMNISCIENTVIEW, detail);
+	drawFlutter(&tempMonster, counter, itsChristmas, offsetX, OMNISCIENTVIEW, detail);
     glPopMatrix();
 
     glLineWidth(lineWidthNow);
@@ -889,17 +891,17 @@ static    char spaceEnglish[]		= "Press the spacebar to begin";
 /* draw option menu for choosing monster                         */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void doOptions(struct monsterInfo monster, long xWin, int counter,
+void doOptions(struct monsterInfo *monster, long xWin, int counter,
 		int itsChristmas, float offsetX, int detail)
     {
     //float pixtoSpace;
     struct monsterInfo tempMonster;
     GLfloat lineWidthNow;
 
-static    char googelonEnglish[]	= "Googelon-6";    
-static    char techsEnglish[]		= "Techs-7";    
-static    char vapourEnglish[]		= "The Vapour-8";    
-static    char flutterEnglish[]		= "Flutter-9";
+    static char googelonEnglish[] = "Googelon-6";    
+    static char techsEnglish[]    = "Techs-7";    
+    static char vapourEnglish[]	  = "The Vapour-8";    
+    static char flutterEnglish[]  = "Flutter-9";
 
     static float optionsBox[4][3] = {
 	{-0.85,  0.5, 7.1},
@@ -913,7 +915,7 @@ static    char flutterEnglish[]		= "Flutter-9";
     /* these monsters are always alive */
     /***********************************/
    
-    tempMonster 		= monster;
+    memcpy(&tempMonster, monster, sizeof(tempMonster));
     tempMonster.energyRemaining = 100;
     tempMonster.monsterIsDead 	= 0;
     tempMonster.deadCount 	= 0;
@@ -997,25 +999,25 @@ static    char flutterEnglish[]		= "Flutter-9";
     glPushMatrix();
 	glTranslatef(-.5,  0.25,  7.2);
 	glScalef(.25,  .25,  .25);
-	drawMonster(tempMonster, counter, itsChristmas, detail);
+	drawMonster(&tempMonster, counter, itsChristmas, detail);
     glPopMatrix();
 	
     glPushMatrix();
 	glTranslatef(+.5,  0.25,  7.2);
 	glScalef(.25,  .25,  .25);
-	drawTechs(tempMonster, detail);
+	drawTechs(&tempMonster, detail);
     glPopMatrix();
 
     glPushMatrix();
 	glTranslatef(-.5,  -0.4,  7.2);
 	glScalef(.25,  .25,  .25);
-	drawVapour(tempMonster, itsChristmas, detail);
+	drawVapour(&tempMonster, itsChristmas, detail);
     glPopMatrix();
 
     glPushMatrix();
 	glTranslatef(+.5,  -0.4,  7.2);
 	glScalef(.25,  .25,  .25);
-	drawFlutter(tempMonster, counter, itsChristmas, offsetX, OMNISCIENTVIEW, detail);
+	drawFlutter(&tempMonster, counter, itsChristmas, offsetX, OMNISCIENTVIEW, detail);
     glPopMatrix();
 
     glPopAttrib();

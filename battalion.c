@@ -14,9 +14,11 @@
 /***********************************************************************/
 
 #include "battalion.h"
-
-
+#include "graphics.h"
+#include "objects.h"
+#include "text.h"
 #include "audio.h"
+#include "net.h"
 
 /*****************/
 /* network stuff */
@@ -4570,7 +4572,7 @@ void goToOverView(int eyeball)
 /* draw a given monster at a given location                      */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawAMonster(float x, struct monsterInfo monster, float z,
+void drawAMonster(float x, struct monsterInfo *monster, float z,
 			int isTarget, int view)
     {
 
@@ -4578,12 +4580,12 @@ void drawAMonster(float x, struct monsterInfo monster, float z,
 	{
 	glPushMatrix();
 	    glTranslatef(x,  0,  z);
-	    switch(monster.monster){
-		case GOOGELON:  if (monster.energyRemaining <= 0)
+	    switch (monster->monster) {
+		case GOOGELON:  if (monster->energyRemaining <= 0)
 				    {
-				    glTranslatef(0, -monster.deadCount * 0.015, 0);
-				    glRotatef(-monster.deadCount * 2, 1,0,0);
-				    glRotatef(-monster.deadCount * 2, 0,1,0);	    
+				    glTranslatef(0, -monster->deadCount * 0.015, 0);
+				    glRotatef(-monster->deadCount * 2, 1,0,0);
+				    glRotatef(-monster->deadCount * 2, 0,1,0);	    
 				    }
 				if ((!isTarget) && (view == MONSTERVIEW))
 				    drawSimpleMonster(monster, mainCounter, itsChristmas, lod);
@@ -4594,10 +4596,10 @@ void drawAMonster(float x, struct monsterInfo monster, float z,
 		case VAPOUR:    drawVapour(monster, itsChristmas, lod);
 				break;
 				
-		case TECHS:	if (monster.energyRemaining <= 0)
+		case TECHS:	if (monster->energyRemaining <= 0)
 				    {
-				    glTranslatef(0, -monster.deadCount * 0.015, 0);
-				    glRotatef(-monster.deadCount * 2, 1,0,0);
+				    glTranslatef(0, -monster->deadCount * 0.015, 0);
+				    glRotatef(-monster->deadCount * 2, 1,0,0);
 				    }
 				if ((!isTarget) && (view == MONSTERVIEW))
 				    drawSimpleTechs(monster,lod);
@@ -4605,10 +4607,10 @@ void drawAMonster(float x, struct monsterInfo monster, float z,
 				    drawTechs(monster,lod);
 				break;
 				
-		case FLUTTER:   if (monster.energyRemaining <= 0)
+		case FLUTTER:   if (monster->energyRemaining <= 0)
 				    {
-				    glTranslatef(0, -monster.deadCount * 0.025, 0);
-				    glRotatef(-monster.deadCount * 2.5, 0,1,0);
+				    glTranslatef(0, -monster->deadCount * 0.025, 0);
+				    glRotatef(-monster->deadCount * 2.5, 0,1,0);
 				    }
 				if (isTarget)
 				    drawFlutter(monster, mainCounter, itsChristmas,
@@ -4707,7 +4709,7 @@ void doDrawing (int eyeball)
     /******************************************************/
     
     if (tanklist->next != NULL)
-	drawTanks(tanklist, mainCounter, Googelon, targets, lod,
+	drawTanks(tanklist, mainCounter, &Googelon, targets, lod,
 		view, viewW);
 
 
@@ -4783,14 +4785,14 @@ void doDrawing (int eyeball)
     /**********************************/
     
     for(temptarget = targets->next;temptarget != NULL;temptarget = temptarget->next)
-	drawAMonster(temptarget->x, temptarget->monster, temptarget->z, 1,view);
+	drawAMonster(temptarget->x, &temptarget->monster, temptarget->z, 1,view);
 
 
     /**********************************/ 
     /* draw the player's monster      */
     /**********************************/
 
-    drawAMonster(0, Googelon, 0, 0,view);
+    drawAMonster(0, &Googelon, 0, 0,view);
 
     /**********************************/
     /* draw explosions                */
@@ -4863,7 +4865,7 @@ textLineWidth = 1.01;
 	    {
 	    if (!(Googelon.timeDead > 100) && !showOptions) {
 		if (Googelon.moveCount < 150)
-		    showScores(itsChristmas, G, V, T, F, Googelon, mainCounter, offsetX, lod);
+		    showScores(itsChristmas, G, V, T, F, &Googelon, mainCounter, offsetX, lod);
 		else
 		    showText2((long) (viewR-viewL), getSoundOn(), noSound, getMusicOn(),
 			    mode3D, no3D, lod, paused, itsChristmas, pointerGrab);
@@ -4872,7 +4874,7 @@ textLineWidth = 1.01;
 	    showText3(lod);
     
 	    if (showOptions)
-		doOptions(Googelon, (long) (viewR-viewL),  mainCounter, itsChristmas, offsetX, lod);
+		doOptions(&Googelon, (long) (viewR-viewL),  mainCounter, itsChristmas, offsetX, lod);
 	    else
 		showText4();	    
     

@@ -22,7 +22,9 @@
  * ocassionally wehn switching from demo to game mode the screen goes
  * black and everything stops
  */
+
 #include "battalion.h"
+#include "net.h"
 
 /*****************/
 /* network stuff */
