@@ -464,22 +464,6 @@ struct score
     	};
 
 /***************************
- * tk.c
- * 
- ***************************/
-
-void tkCloseWindow(void);
-void tkExec(void);
-void tkGetMouseLoc(int *x, int *y);
-void tkInitPosition(int x, int y, int width, int height);
-void tkInitDisplayMode(GLenum type);
-GLenum tkInitWindow(char *title);
-void tkSetRGBMap(int size, float *rgb);
-void tkSwapBuffers(void);
-void unGrabPointer();
-void grabPointer();
-
-/***************************
  * update.c
  * holds the update routines
  ***************************/
@@ -504,34 +488,6 @@ void updateSlagTanks(struct tank *);
 void updateBooms(struct boom *, struct tank *);
 int tankHit(struct tank *, float, float, float);
 void addNewTank(struct targetInfo *, float,  float,  int, struct tank *, struct tree *, int, int, struct monsterInfo *);
-
-
-/****************************************************
- * audio.c
- * holds audio routines for battalion
- ****************************************************/
-
-void turnSoundOff();
-void turnSoundOn();
-void toggleSound();
-int getSoundOn();
-void turnMusicOff();
-void turnMusicOn();
-void toggleMusic();
-int getMusicOn();
-
-int initSound();
-void exitSound();
-
-int doSound(ALuint nsource, int nbuffer, ALboolean loop);
-int doSoundAt(ALuint nsource, int nbuffer, ALboolean loop, float x, float y, float z);
-int stopSound(ALuint source);
-int stopAllSounds();
-ALuint getPlayersSource();
-ALuint getFreeSource();
-
-int playMusic(int source, ALboolean loop);
-int stopMusic();
 
 
 /****************************************************

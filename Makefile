@@ -33,8 +33,8 @@ install: all
 	    $(INSTALL) -m 0644 $$f/* $(DESTDIR)$(DATADIR)/$$f; \
 	done
 
-audio.o: audio.c battalion.h tk.h
-battalion.o: battalion.c battalion.h tk.h
+audio.o: audio.c audio.h battalion.h tk.h
+battalion.o: battalion.c battalion.h tk.h audio.h
 font.o: font.c tk.h
 gprim.o: gprim.c battalion.h tk.h
 graphics.o: graphics.c battalion.h tk.h

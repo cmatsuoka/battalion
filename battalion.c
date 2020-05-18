@@ -16,12 +16,7 @@
 #include "battalion.h"
 
 
-/******************/
-/* openAL headers */
-/******************/
-#include <AL/al.h>
-#include <AL/alut.h>
-extern ALfloat listenerOri[];
+#include "audio.h"
 
 /*****************/
 /* network stuff */

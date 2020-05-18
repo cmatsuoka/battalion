@@ -236,6 +236,14 @@ extern GLenum tkCreateFilledFont(GLuint);
 extern GLenum tkCreateBitmapFont(GLuint);
 extern void tkDrawStr(GLuint, char *);
 
+
+/*
+ * Stuff below added by Johan Hagman for pointer
+ * grabbing in Solaris battalion
+ */
+void unGrabPointer();
+void grabPointer();
+
 #ifdef __cplusplus
 }
 #endif
