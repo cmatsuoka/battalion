@@ -3699,9 +3699,9 @@ void updateTargets()
 	thaMonster.beamOn		= temptarget->net_beamOn;
 
 	nearAngle = temptarget->net_headHorzRotate;
-	if (fabs(thaMonster.headHorzRotate - (temptarget->net_headHorzRotate + 3600)) < fabs(thaMonster.headHorzRotate - nearAngle))
+	if (abs(thaMonster.headHorzRotate - (temptarget->net_headHorzRotate + 3600)) < abs(thaMonster.headHorzRotate - nearAngle))
 	    nearAngle = temptarget->net_headHorzRotate + 3600;
-	if (fabs(thaMonster.headHorzRotate - (temptarget->net_headHorzRotate - 3600)) < fabs(thaMonster.headHorzRotate - nearAngle))
+	if (abs(thaMonster.headHorzRotate - (temptarget->net_headHorzRotate - 3600)) < abs(thaMonster.headHorzRotate - nearAngle))
 	    nearAngle = temptarget->net_headHorzRotate - 3600;
 
 	thaMonster.headHorzRotate	= 0.7 * thaMonster.headHorzRotate + 0.3 * nearAngle;
