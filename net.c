@@ -25,6 +25,7 @@
 
 #include "battalion.h"
 #include "net.h"
+#include "update.h"
 
 /*****************/
 /* network stuff */

@@ -9,7 +9,8 @@ DATADIR  = /usr/local/games/battalion
 SCOREDIR = /var/local/battalion
 ASSETS   = DATA MUSIC SOUNDS TEXTURES
 LIBS     = -lGL -lGLU -lalut -lopenal -lm -lX11 -lXext
-OBJS 	 = battalion.o audio.o net.o gprim.o graphics.o objects.o text.o update.o tk.o font.o
+OBJS 	 = battalion.o audio.o net.o gprim.o graphics.o objects.o text.o \
+           update.o tk.o font.o util.o
 BIN      = battalion
 
 .c.o:
@@ -34,12 +35,13 @@ install: all
 	done
 
 audio.o: audio.c audio.h battalion.h tk.h
-battalion.o: battalion.c battalion.h tk.h graphics.h objects.h text.h audio.h net.h
+battalion.o: battalion.c battalion.h tk.h graphics.h objects.h update.h text.h audio.h net.h
 font.o: font.c tk.h
 gprim.o: gprim.c gprim.h battalion.h tk.h
 graphics.o: graphics.c battalion.h tk.h graphics.h objects.h gprim.h text.h
-net.o: net.c battalion.h tk.h net.h
+net.o: net.c battalion.h tk.h net.h update.h
 objects.o: objects.c battalion.h tk.h objects.h graphics.h gprim.h
 text.o: text.c battalion.h tk.h text.h graphics.h
 tk.o: tk.c battalion.h tk.h
-update.o: update.c battalion.h tk.h
+update.o: update.c battalion.h tk.h update.h
+util.o: util.c battalion.h tk.h

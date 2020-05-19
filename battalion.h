@@ -466,37 +466,9 @@ struct score
 	char name[NAME_SIZE];
     	};
 
-/***************************
- * update.c
- * holds the update routines
- ***************************/
 
-void showError(char *);
-float buildingHeight(int,  int);
-struct monsterInfo resetMonsterParameters(struct monsterInfo);
+#define same(x,y) (!strcmp(x, y))
 
-int same(char *, char *);
-int different(char *, char *);
-
-
-float centerText(char *,  float);
-
-void updateGun(float, float, int, int, int,struct monsterInfo *);
-void updateVap(float, float, int,struct monsterInfo *);
-void updatetrees(struct tree *, int);
-void updateBeam(struct monsterInfo *, struct targetInfo *, float, float, struct tank *, struct tree **, int, struct monsterInfo *);
-void updateTanks(struct tank *, float, float, float, int, int, struct tank *, 
-		float, int, int, struct monsterInfo *, struct targetInfo *);
-void updateSlagTanks(struct tank *);
-void updateBooms(struct boom *, struct tank *);
-int tankHit(struct tank *, float, float, float);
-void addNewTank(struct targetInfo *, float,  float,  int, struct tank *, struct tree *, int, int, struct monsterInfo *);
-
-
-/****************************************************
- * battalion.c
- * holds everything that hasnt been put somewhere else
- ****************************************************/
 
 void goToHighDetail();
 void goToLowDetail();
@@ -561,6 +533,10 @@ void reshape( int, int);
 void id(void);
 
 void showCommands(char *);
+
+
+void showError(char *);
+
 
 #endif  // BATTALION_H_
 

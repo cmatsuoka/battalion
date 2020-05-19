@@ -16,6 +16,7 @@
 #include "battalion.h"
 #include "graphics.h"
 #include "objects.h"
+#include "update.h"
 #include "text.h"
 #include "audio.h"
 #include "net.h"
