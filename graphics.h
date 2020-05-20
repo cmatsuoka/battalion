@@ -26,32 +26,9 @@ void wzplus(float,  float,  float,  float,  float);
 void wxplus(float,  float,  float,  float,  float);
 void wxminus(float,  float,  float,  float,  float);
 
-void makeBooms(void);
-
-void drawBuilding0(float *, int);
-void drawBuilding6(int, float *,  float *, int);
-void drawBuilding8(float *,float *, int);
-void drawBuilding11(int);
 void drawBuilding15(float *,  float *, int);
-void drawBuilding22(float *);
-void drawBuilding25(void);
-void drawBuilding26(int, int);
-void drawBuilding29(int,int);
-void drawBuilding33(int, int);
 void drawTower(int, int);
-void drawCoolingTower(int);
-
-void drawHills(int,int);
-void drawWater(int,int);
-
 void drawBattlefield(struct road *, float, float, int, int,int);
-
-void drawLake0(int);
-void drawLake1(int);
-void drawHill0(int);
-void drawHill1(int, int);
-void drawHill2(int, int);
-void drawHill3(int, int);
 
 void drawtrees(struct tree *, int, int, int, int,int);
 

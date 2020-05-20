@@ -207,6 +207,8 @@ void doTexStuff(char * dataPath, char * fileName, int width, int height,
 /* create the objects to be used in the game                     */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+static void makeBooms(void);
+
 void makeObjects(char * dataPath)
     {
     GLfloat lineWidthNow;
@@ -1635,7 +1637,7 @@ void wxminus(float x,  float y,  float z,  float wy,  float wz)
 /* draw generic square building                                  */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding0(float * colour, int detail)
+static void drawBuilding0(float * colour, int detail)
     {
     makercubenobtm(0.0, 0.4, 0.0, 0.3, 0.4, 0.3, colour);
     if (detail > 0)
@@ -1648,7 +1650,7 @@ void drawBuilding0(float * colour, int detail)
 /* draw generic fast food resteraunt                             */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
    
-void drawBuilding6(int counter, float * c1,  float * c2, int detail)
+static void drawBuilding6(int counter, float * c1,  float * c2, int detail)
     {
     makercubenobtmnotop(  0,  .2, 0,  .3, .2, .35, c1);
     makeitPyr(1, c2,  0,  .5, 0,  .35, .1, .45);
@@ -1685,7 +1687,7 @@ void drawBuilding6(int counter, float * c1,  float * c2, int detail)
 /* draw warehouse / hanger                                       */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding8(float * c1,  float * c2, int detail)
+static void drawBuilding8(float * c1,  float * c2, int detail)
     {
     makercubenobtmnotop(0,  .2, 0,  .35, .2, .3, c1);
     makeitPyr(4, c2,  0,  .5, 0,  .35, .1, .3);
@@ -1706,7 +1708,7 @@ void drawBuilding8(float * c1,  float * c2, int detail)
 /* draw cooling towers                                           */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawCoolingTower(int detail)
+static void drawCoolingTower(int detail)
     {
     GLUquadricObj *qobj;
 
@@ -1738,7 +1740,7 @@ void drawCoolingTower(int detail)
 /* draw factory smokestacks                                      */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding11(int detail)
+static void drawBuilding11(int detail)
     {
     makercubenobtm(  0,  .05, 0,  .3, .05, .3, colorgrey1);
 
@@ -1784,7 +1786,7 @@ void drawBuilding15(float * buildingColour,  float * awningColour, int detail)
 /* draw office building                                          */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding22(float * color)
+static void drawBuilding22(float * color)
     {
     makercubenobtm(0,  .75, 0,  .3, .75, .3, color);    
     makercubenobtmnotop(0,  .4, 0,  .307, .1, .307, colorblack);
@@ -1797,7 +1799,7 @@ void drawBuilding22(float * color)
 /* draw smaller office building                                   */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding34(float * color)
+static void drawBuilding34(float * color)
     {
     makercubenobtm(0,  .3, 0,  .3, .3, .3, color);    
     makercubenobtmnotop(0,  .4, 0,  .307, .1, .307, colorblack);
@@ -1808,7 +1810,7 @@ void drawBuilding34(float * color)
 /* draw small office building                                    */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding36(float * color)
+static void drawBuilding36(float * color)
     {
     makercubenobtm(0,  .5, 0,  .3, .5, .3, color);    
     makercubenobtmnotop(0,  .4, 0,  .307, .1, .307, colorblack);
@@ -1820,7 +1822,7 @@ void drawBuilding36(float * color)
 /* draw office building with sign                                */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding37(float * color, int detail)
+static void drawBuilding37(float * color, int detail)
     {
     static float tv1[2] = {0,1};
     static float tv2[2] = {1,1};
@@ -1887,7 +1889,7 @@ void drawBuilding37(float * color, int detail)
 /* draw satellite dish                                           */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding25()
+static void drawBuilding25()
     {
     long backNow;
     GLUquadricObj *qobj;
@@ -1980,7 +1982,7 @@ void drawBuilding25()
 /* draw drive in theatre screen                                  */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
   
-void drawBuilding26(int rorl, int detail)
+static void drawBuilding26(int rorl, int detail)
     {
     /***************************/
     /* theatre screen supports */
@@ -2082,7 +2084,7 @@ void drawBuilding26(int rorl, int detail)
 /* draw fountain                                                 */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding29(int itsChristmas, int detail)
+static void drawBuilding29(int itsChristmas, int detail)
     {
     makercubenobtm(  0,  .05, 0,  .3, .05, .3, colorwhite);
 
@@ -2108,7 +2110,7 @@ void drawBuilding29(int itsChristmas, int detail)
 /* draw hero beam in effect                                      */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawBuilding33(int count, int detail)
+static void drawBuilding33(int count, int detail)
     {
     float c[4], height;
    
@@ -2387,7 +2389,7 @@ void drawBattlefield(struct road * roads,  float xshift,  float zshift,
 /* draw square lake segment                                      */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawLake0(int itsChristmas)
+static void drawLake0(int itsChristmas)
     {   
     static float lake[4][3] = {
         {-0.3,  0.0, -0.3},
@@ -2413,7 +2415,7 @@ void drawLake0(int itsChristmas)
 /* draw triangular lake segment                                  */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawLake1(int itsChristmas)
+static void drawLake1(int itsChristmas)
     {    
     float lake2[3][3] = {
         {-0.3,  0.0, -0.3},
@@ -2437,7 +2439,7 @@ void drawLake1(int itsChristmas)
 /* draw central hill segment                                     */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawHill0(int itsChristmas)
+static void drawHill0(int itsChristmas)
     {   
     static float hill[4][3] = {
         { 0.3, 0.6, -0.3},
@@ -2464,7 +2466,7 @@ void drawHill0(int itsChristmas)
 /* draw side of hill                                             */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawHill1(int sidemod, int itsChristmas)
+static void drawHill1(int sidemod, int itsChristmas)
     {   
     float c[4];
 
@@ -2514,7 +2516,7 @@ void drawHill1(int sidemod, int itsChristmas)
 /* draw corner of hill                                           */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawHill2(int sidemod, int itsChristmas)
+static void drawHill2(int sidemod, int itsChristmas)
     {   
     float c[4];
 
@@ -2562,7 +2564,7 @@ void drawHill2(int sidemod, int itsChristmas)
 /* draw inside corner of hill                                    */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void drawHill3(int sidemod, int itsChristmas)
+static void drawHill3(int sidemod, int itsChristmas)
     {
     float c[4];
 
@@ -2618,7 +2620,7 @@ void drawHill3(int sidemod, int itsChristmas)
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
- void drawWater(int shape,  int itsChristmas)
+static void drawWater(int shape,  int itsChristmas)
     {
     switch(shape){
 	case 0:	    drawLake0(itsChristmas);
@@ -2643,7 +2645,7 @@ void drawHill3(int sidemod, int itsChristmas)
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
- void drawHills(int shape,  int itsChristmas)
+static void drawHills(int shape,  int itsChristmas)
     {
     switch(shape){
 	case 0:	    drawHill0(itsChristmas);
@@ -3500,7 +3502,7 @@ void drawHeroWeapon(float targetx, float targetz, float x, float y,
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-void makeBooms()
+static void makeBooms()
 {
     int counter;
     GLuint O;
