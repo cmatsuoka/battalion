@@ -563,11 +563,11 @@ static    char shootEnglish[]		= "left btn/ctrl";
 static    char azEnglish[]		= "a z";
 
 static    char grabEnglish[]		= "-PtGrab";
-/* static    char videoEnglish[]	= "-3D"; */
+//static    char videoEnglish[]	= "-3D";
 
 static    char rotateEnglish[]		= "- Rotate Overview";
 static    char ijklEnglish[]		= "ijkl";
-static    char showcaseEnglish[]	= "-Help";
+//static    char showcaseEnglish[]	= "-Help";
 
 static    char pauseEnglish[]		= "-Pause";
 static    char detailEnglish[]		= "-Detail";
@@ -780,9 +780,9 @@ static    char musicEnglish[]		= "-Music";
 		  tkDrawStr(strokeBase,offstring);
     glPopMatrix();
 
-/* someday the 3D from the Original GL version will return in
- * the OpenGL version ... but not yet
-
+    // someday the 3D from the Original GL version will return in
+    // the OpenGL version ... but not yet
+#if 0
     glPushMatrix();
 	glTranslatef(-4.8,  -4.5,  0);
 	tkDrawStr(strokeBase, "v");
@@ -800,8 +800,12 @@ static    char musicEnglish[]		= "-Music";
 	    mode3D ? tkDrawStr(strokeBase,onstring) : tkDrawStr(strokeBase,offstring);
 
     glPopMatrix();
-*/
+#endif
 
+    // CM: commented out help, not available in non-SGI systems. We could
+    //     show information from the showcase file in the main screen,
+    //     but that's currently not implemented .
+#if 0
     glPushMatrix();
 	glTranslatef(-4.8,  -5,  0);
 	tkDrawStr(strokeBase, "h");
@@ -811,11 +815,12 @@ static    char musicEnglish[]		= "-Music";
     glPopMatrix();
 
     glPushMatrix();
-	glTranslatef(-2.75,  -5,  0);
+	glTranslatef(-2.65,  -5,  0);
 
 	tkDrawStr(strokeBase,unavailablestring);
 
     glPopMatrix();
+#endif
 
     glPopAttrib();
     }
